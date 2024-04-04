@@ -1,0 +1,8 @@
+# Nexus 5 specific
+vendor
+.idea
+.phpunit.result.cache
+
+# Nexus 4 specific
+.env
+node_modules

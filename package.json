@@ -1,0 +1,15 @@
+{
+  "name": "nexus",
+  "version": "1.0.0",
+  "description": "This is a simple PHP framework for building web applications.",
+  "main": "index.js",
+  "scripts": {
+    "start": "php -S localhost:8000",
+    "watch": "npx tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch",
+    "build": "npx tailwindcss -i ./public/css/input.css -o ./public/css/output.css --minify"
+  },
+  "private": true,
+  "devDependencies": {
+    "tailwindcss": "^3.4.3"
+  }
+}
