@@ -38,7 +38,7 @@ on your system. You can install Composer by following the instructions on the Co
 Once you have Composer installed, you can install Lumenity Framework by running the following command in your terminal:
 
 ```bash
-composer create-project lumenity/lumenity
+composer create-project lumenity/framework
 ```
 
 This will create a new directory called `Lumenity` in your current working directory and install Lumenity Framework in that directory.
