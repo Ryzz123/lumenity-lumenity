@@ -1,4 +1,4 @@
-### Lumenity FRAMEWORK
+### LUMENITY FRAMEWORK
 
 Lumenity Framework is a PHP framework that is designed to be simple, fast, and easy to use. It is designed to be a lightweight
 framework that can be used to build web applications quickly and easily. It is designed to be flexible and extensible, so you can
@@ -6,7 +6,7 @@ easily add new features and functionality to your web applications.
 
 #### Version 1.0.0
 
-<img src="https://i.ibb.co/B2LQF38/Whats-App-Image-2024-04-05-at-02-33-30-22d7cfcb.jpg" alt="">
+<img src="https://i.ibb.co/1qHcwgn/Whats-App-Image-2024-04-05-at-03-23-41-57cebe49.jpg" alt="">
 
 ### Features
 
