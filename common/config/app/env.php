@@ -1,6 +1,6 @@
 <?php
 
-namespace Nexus\Framework\Common\Config\App;
+namespace Lumenity\Framework\common\config\app;
 
 use Dotenv\Dotenv;
 

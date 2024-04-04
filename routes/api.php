@@ -1,6 +1,6 @@
 <?php
 
-namespace Nexus\Framework\routes;
+namespace Lumenity\Framework\routes;
 
 /**
  * Api Routes

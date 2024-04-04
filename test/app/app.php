@@ -1,6 +1,6 @@
 <?php
 
-namespace Nexus\Framework\test\app;
+namespace Lumenity\Framework\test\app;
 
 use Exception;
 use PHPUnit\Framework\TestCase;
@@ -24,7 +24,7 @@ class app extends TestCase
     public function testWelcome(): void
     {
         // Perform the welcome message test
-        $this->assertEquals('Welcome to Nexus Framework', 'Welcome to Nexus Framework');
+        $this->assertEquals('Welcome to Lumenity Framework', 'Welcome to Lumenity Framework');
     }
 
     /**

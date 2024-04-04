@@ -1,10 +1,10 @@
 <?php
 
-namespace Nexus\Framework\app\http\middlewares;
+namespace Lumenity\Framework\app\http\middlewares;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Nexus\Framework\common\config\app\cors as CorsConfig;
+use Lumenity\Framework\common\config\app\cors as CorsConfig;
 
 /**
  * CORS Middleware

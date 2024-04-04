@@ -1,11 +1,11 @@
 <?php
 
-namespace Nexus\Framework\app\http\controllers;
+namespace Lumenity\Framework\app\http\controllers;
 
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Nexus\Framework\common\config\app\view as View;
+use Lumenity\Framework\common\config\app\view as View;
 
 /**
  * Welcome Controller
@@ -27,7 +27,7 @@ class WelcomeController
     public function index(Request $req, Response $res): void
     {
         View::render('welcome', [
-            'title' => 'Welcome to Nexus Framework',
+            'title' => 'Welcome to Lumenity Framework',
             'content' => 'This is a simple PHP framework for building web applications.'
         ]);
     }

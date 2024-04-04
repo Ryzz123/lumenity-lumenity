@@ -1,6 +1,6 @@
 <?php
 
-namespace Nexus\Framework\common\utils;
+namespace Lumenity\Framework\common\utils;
 
 class pagination
 {

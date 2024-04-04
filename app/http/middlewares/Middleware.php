@@ -1,6 +1,6 @@
 <?php
 
-namespace Nexus\Framework\app\http\middlewares;
+namespace Lumenity\Framework\app\http\middlewares;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;

@@ -33,6 +33,7 @@
             text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.607);
             z-index: 3;
             margin-left: 30px;
+            text-transform: uppercase;
         }
 
         .background {
@@ -102,7 +103,7 @@
 </head>
 <body>
 <div class="container">
-    <h1 class="content">NEXUS</h1>
+    <h1 class="content">Lumenity</h1>
     <p class="subtitle">{{ $title }}</p>
     <p class="subtitle2">
         {{ $content }}

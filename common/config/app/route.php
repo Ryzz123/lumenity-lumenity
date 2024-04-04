@@ -1,9 +1,9 @@
 <?php
 
-namespace Nexus\Framework\common\config\app;
+namespace Lumenity\Framework\common\config\app;
 
 use Closure;
-use Nexus\Framework\Server\App;
+use Lumenity\Framework\Server\App;
 
 /**
  * Route Configuration

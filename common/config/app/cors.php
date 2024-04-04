@@ -1,6 +1,6 @@
 <?php
 
-namespace Nexus\Framework\common\config\app;
+namespace Lumenity\Framework\common\config\app;
 
 /**
  * Cross-Origin Resource Sharing (CORS) Configuration

@@ -1,11 +1,11 @@
 <?php
 
-namespace Nexus\Framework\server;
+namespace Lumenity\Framework\server;
 
 use Exception;
 use Illuminate\Http\Response;
 use Illuminate\Http\Request;
-use Nexus\Framework\Common\Config\App\view;
+use Lumenity\Framework\Common\Config\App\view;
 
 /**
  * Application Server

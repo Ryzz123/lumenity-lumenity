@@ -1,9 +1,9 @@
 <?php
 
-namespace Nexus\Framework\routes;
+namespace Lumenity\Framework\routes;
 
-use Nexus\Framework\app\http\controllers\WelcomeController;
-use Nexus\Framework\Common\Config\App\route as Route;
+use Lumenity\Framework\app\http\controllers\WelcomeController;
+use Lumenity\Framework\Common\Config\App\route as Route;
 
 /**
  * Website Routes

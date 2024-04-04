@@ -1,16 +1,16 @@
 {
-    "name": "nexus/framework",
+    "name": "lumenity/framework",
     "version": "1.0.0",
     "description": "This is a simple PHP framework for building web applications.",
     "type": "project",
     "autoload": {
         "psr-4": {
-            "Nexus\\Framework\\": "."
+            "Lumenity\\Framework\\": "."
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Nexus\\Framework\\": "test"
+            "Lumenity\\Framework\\": "test"
         }
     },
     "authors": [

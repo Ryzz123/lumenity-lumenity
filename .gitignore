@@ -1,8 +1,8 @@
-# Nexus 5 specific
+# Lumenity 5 specific
 vendor
 .idea
 .phpunit.result.cache
 
-# Nexus 4 specific
+# Lumenity 4 specific
 .env
 node_modules

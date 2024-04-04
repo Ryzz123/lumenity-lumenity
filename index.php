@@ -6,20 +6,20 @@ require 'vendor/autoload.php';
  * LICENSE: This source file is subject to the MIT License that is bundled
  * with this package in the file LICENSE.md.
  *
- * @package Nexus Framework
- * @author  Nexus Framework
+ * @package Lumenity Framework
+ * @author  Lumenity Framework
  * @license MIT License
  *
- * Nexus Framework is a powerful and flexible PHP framework for building web applications and APIs.
+ * Lumenity Framework is a powerful and flexible PHP framework for building web applications and APIs.
  * It provides a simple and elegant syntax that helps you create clean and maintainable code.
  */
 
-use Nexus\Framework\Common\Config\App\env;
-use Nexus\Framework\Common\Config\Handler\DebugHandler;
-use Nexus\Framework\Database\connection;
-use Nexus\Framework\routes\api;
-use Nexus\Framework\routes\website;
-use Nexus\Framework\Server\App;
+use Lumenity\Framework\common\config\app\env;
+use Lumenity\Framework\common\config\handler\DebugHandler;
+use Lumenity\Framework\database\connection;
+use Lumenity\Framework\routes\api;
+use Lumenity\Framework\routes\website;
+use Lumenity\Framework\Server\App;
 
 /**
  * Capture the environment variables
