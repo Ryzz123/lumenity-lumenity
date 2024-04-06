@@ -3,7 +3,7 @@
 namespace Lumenity\Framework\config\common\app;
 
 use Closure;
-use Lumenity\Framework\Server\App;
+use Lumenity\Framework\server\App;
 
 /**
  * Route Configuration

@@ -19,7 +19,7 @@ use Lumenity\Framework\config\common\handler\DebugHandler;
 use Lumenity\Framework\database\connection;
 use Lumenity\Framework\routes\api;
 use Lumenity\Framework\routes\web;
-use Lumenity\Framework\Server\App;
+use Lumenity\Framework\server\App;
 
 /**
  * Capture the environment variables

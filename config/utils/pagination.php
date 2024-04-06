@@ -1,6 +1,6 @@
 <?php
 
-namespace Lumenity\Framework\common\utils;
+namespace Lumenity\Framework\config\utils;
 
 class pagination
 {

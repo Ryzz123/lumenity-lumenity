@@ -1,6 +1,6 @@
 {
   "name": "lumenity/framework",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "This is a simple PHP framework for building web applications.",
   "type": "project",
   "autoload": {
