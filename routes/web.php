@@ -3,7 +3,7 @@
 namespace Lumenity\Framework\routes;
 
 use Lumenity\Framework\app\http\controllers\WelcomeController;
-use Lumenity\Framework\config\common\App\route as Route;
+use Lumenity\Framework\config\common\app\route as Route;
 
 /**
  * Website Routes
