@@ -1,6 +1,6 @@
 <?php
 
-namespace Lumenity\Framework\common\config\validation;
+namespace Lumenity\Framework\config\common\validation;
 
 use Exception;
 

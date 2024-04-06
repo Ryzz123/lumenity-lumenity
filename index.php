@@ -14,11 +14,11 @@ require 'vendor/autoload.php';
  * It provides a simple and elegant syntax that helps you create clean and maintainable code.
  */
 
-use Lumenity\Framework\common\config\app\env;
-use Lumenity\Framework\common\config\handler\DebugHandler;
+use Lumenity\Framework\config\common\app\env;
+use Lumenity\Framework\config\common\handler\DebugHandler;
 use Lumenity\Framework\database\connection;
 use Lumenity\Framework\routes\api;
-use Lumenity\Framework\routes\website;
+use Lumenity\Framework\routes\web;
 use Lumenity\Framework\Server\App;
 
 /**
@@ -57,7 +57,7 @@ DebugHandler::capture();
  * functions. By capturing the routes, the application knows how to handle
  * incoming requests and direct them to the appropriate controllers or actions.
  */
-website::capture();
+web::capture();
 
 /**
  * Capture the API routes
@@ -79,4 +79,3 @@ api::capture();
  * The application continues to run until it receives a termination signal.
  */
 App::run();
-

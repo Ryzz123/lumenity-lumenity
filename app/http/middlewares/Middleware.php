@@ -3,7 +3,7 @@
 namespace Lumenity\Framework\app\http\middlewares;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
+use Lumenity\Framework\config\common\http\Response;
 
 interface Middleware
 {

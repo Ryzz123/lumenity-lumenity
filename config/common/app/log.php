@@ -1,6 +1,6 @@
 <?php
 
-namespace Lumenity\Framework\common\config\app;
+namespace Lumenity\Framework\config\common\app;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
@@ -28,6 +28,7 @@ class log
         if (!isset(self::$logger)) {
             self::$logger = new Logger('application');
             self::$logger->pushHandler(new StreamHandler(__DIR__ . '/../../../bootstrap/log/application.log'));
+            self::$logger->pushHandler(new StreamHandler('php://stdout'));
         }
         return self::$logger;
     }

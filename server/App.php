@@ -3,9 +3,8 @@
 namespace Lumenity\Framework\server;
 
 use Exception;
-use Illuminate\Http\Response;
+use Lumenity\Framework\config\common\http\Response;
 use Illuminate\Http\Request;
-use Lumenity\Framework\Common\Config\App\view;
 
 /**
  * Application Server
@@ -94,7 +93,7 @@ class App
         }
 
         // If no matching route is found, render a 404 error page
-        view::render('missing', [
+        $res::view('missing', [
             'title' => '404 | PAGE NOT FOUND',
             'code' => '404',
             'message' => "NOT FOUND"

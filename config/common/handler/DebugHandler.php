@@ -1,6 +1,6 @@
 <?php
 
-namespace Lumenity\Framework\common\config\handler;
+namespace Lumenity\Framework\config\common\handler;
 
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;

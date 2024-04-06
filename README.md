@@ -54,7 +54,7 @@ web application, and other settings in this file.
 To use Lumenity Framework, you need to create a new controller class in the `app/http/Controllers` directory. You can create a new
 controller class by extending the `Lumenity\Http\Controller` class and adding your own methods to the class.
 
-You can then create a new route in the `routes/website.php` file that maps a URL to a controller method. You can do this by calling
+You can then create a new route in the `routes/web.php` file that maps a URL to a controller method. You can do this by calling
 the `get` or `post` method on the `$router` object and passing the URL and the controller method as arguments.
 
 You can then run your web application by running the following command in your terminal:

@@ -3,14 +3,14 @@
 namespace Lumenity\Framework\routes;
 
 use Lumenity\Framework\app\http\controllers\WelcomeController;
-use Lumenity\Framework\Common\Config\App\route as Route;
+use Lumenity\Framework\config\common\App\route as Route;
 
 /**
  * Website Routes
  *
  * This class handles the definition of routes specific to the website.
  */
-class website
+class web
 {
     /**
      * Capture Website Routes

@@ -3,8 +3,8 @@
 namespace Lumenity\Framework\app\http\middlewares;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Lumenity\Framework\common\config\app\cors as CorsConfig;
+use Lumenity\Framework\config\common\http\Response;
+use Lumenity\Framework\config\common\app\cors as CorsConfig;
 
 /**
  * CORS Middleware

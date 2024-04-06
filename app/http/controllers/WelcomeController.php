@@ -4,8 +4,7 @@ namespace Lumenity\Framework\app\http\controllers;
 
 use Exception;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Lumenity\Framework\common\config\app\view as View;
+use Lumenity\Framework\config\common\http\Response;
 
 /**
  * Welcome Controller
@@ -26,9 +25,24 @@ class WelcomeController
      */
     public function index(Request $req, Response $res): void
     {
-        View::render('welcome', [
+        $res::view('welcome', [
             'title' => 'Welcome to Lumenity Framework',
             'content' => 'This is a simple PHP framework for building web applications.'
         ]);
+    }
+
+    /**
+     * Health Check
+     *
+     * This method returns a simple JSON response indicating the status of the application.
+     * @param Request $req
+     * @param Response $res
+     * @return void
+     */
+    public function healthCheck(Request $req, Response $res): void
+    {
+        $res->setContent(['status' => 'ok'])
+            ->setStatusCode(200)
+            ->send();
     }
 }
