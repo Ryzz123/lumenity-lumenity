@@ -34,11 +34,13 @@ class view
         // Set the paths for view templates and cache
         $views = self::$viewsPath;
         $cache = self::$cachePath;
+        session_start();
 
         // Create a new BladeOne instance
         $blade = new BladeOne($views, $cache, BladeOne::MODE_AUTO);
 
         // Enable including the scope in the view templates
+        $blade->getCsrfToken(); // it's a way to generate the csrf token (if it's not generated yet)
         $blade->includeScope = true;
 
         // Render the view template and output the result

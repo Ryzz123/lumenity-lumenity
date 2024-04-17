@@ -19,6 +19,7 @@ class Response extends Responses
     public static function view(string $view, array $data = []): void
     {
         View::render($view, $data);
+        exit();
     }
 
     /**

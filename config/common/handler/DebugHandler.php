@@ -26,10 +26,24 @@ class DebugHandler
         // Create a new instance of Whoops Run
         $whoops = new Run;
 
-        // Push the PrettyPageHandler to display formatted error pages
-        $whoops->pushHandler(new PrettyPageHandler);
+        // Create and configure the PrettyPageHandler
+        $handler = tap(new PrettyPageHandler, function (PrettyPageHandler $handler) {
+            // Set the title for the error page
+            $handler->setPageTitle('Lumenity Framework Error');
+            // Add a resource path for additional assets
+            $handler->addResourcePath(realpath(__DIR__ . '/../../../public'));
+            // Add a custom CSS file for styling the error page
+            $handler->addCustomCss('/css/root/whoops.custom.css');
+            // Add custom data table for framework information
+            $handler->addDataTable('Lumenity Framework', [
+                'Version' => '3.0.0'
+            ]);
+        });
 
-        // Register Whoops as the global PHP error and exception handler
+        // Push the configured handler to the Whoops stack
+        $whoops->pushHandler($handler);
+
+        // Register Whoops error handler
         $whoops->register();
     }
 }
