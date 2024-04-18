@@ -3,6 +3,7 @@
 namespace Lumenity\Framework\config\common\http;
 
 use Exception;
+use JetBrains\PhpStorm\NoReturn;
 use Lumenity\Framework\config\common\app\view as View;
 use Illuminate\Http\Response as Responses;
 
@@ -16,7 +17,7 @@ class Response extends Responses
     /**
      * @throws Exception
      */
-    public static function view(string $view, array $data = []): void
+    #[NoReturn] public static function view(string $view, array $data = []): void
     {
         View::render($view, $data);
         exit();

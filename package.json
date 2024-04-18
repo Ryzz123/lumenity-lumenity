@@ -1,15 +1,17 @@
 {
   "name": "lumenity",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "This is a simple PHP framework for building web applications.",
   "main": "index.js",
   "scripts": {
-    "start": "php -S localhost:8000",
+    "start": "php -S 127.0.0.1:5000\n",
     "watch": "npx tailwindcss -i ./public/css/input.css -o ./public/css/output.css --watch",
     "build": "npx tailwindcss -i ./public/css/input.css -o ./public/css/output.css --minify"
   },
   "private": true,
   "devDependencies": {
-    "tailwindcss": "^3.4.3"
+    "tailwindcss": "^3.4.3",
+    "axios": "^1.6.8",
+    "postcss": "^8.4.38"
   }
 }

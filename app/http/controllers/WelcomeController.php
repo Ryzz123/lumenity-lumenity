@@ -4,6 +4,7 @@ namespace Lumenity\Framework\app\http\controllers;
 
 use Exception;
 use Illuminate\Http\Request;
+use JetBrains\PhpStorm\NoReturn;
 use Lumenity\Framework\config\common\http\Response;
 
 /**
@@ -23,7 +24,7 @@ class WelcomeController
      * @return void
      * @throws Exception
      */
-    public function index(Request $req, Response $res): void
+    #[NoReturn] public function index(Request $req, Response $res): void
     {
         $res::view('welcome', [
             'title' => 'Welcome to Lumenity Framework',
