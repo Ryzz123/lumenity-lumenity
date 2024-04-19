@@ -44,6 +44,7 @@ class csrf implements Middleware
             $res->setContent(['error' => 'Invalid CSRF token'])
                 ->setStatusCode(403)
                 ->send();
+            exit();
         }
     }
 }
