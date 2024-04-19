@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/x-icon" href="/public/favicon.ico">
-    <title>{{ $title }}</title>
+    <title>Lumenity</title>
     <style>
         @import url("https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700&display=swap");
 
@@ -29,7 +29,7 @@
             color: white;
             font-weight: 600;
             letter-spacing: 40px;
-            font-size: 40px;
+            font-size: 45px;
             text-shadow: 2px 2px 10px rgba(255, 255, 255, 0.607);
             z-index: 3;
             margin-left: 30px;
@@ -45,14 +45,14 @@
             background: blue;
             position: absolute;
             filter: blur(50px);
-            box-shadow: 5vmin 3vmin 0vmin #f09;
+            box-shadow: 5vmin 3vmin 0 #f09;
             opacity: 50%;
         }
 
         .subtitle {
             font-family: "Inter", sans-serif;
             text-align: center;
-            color: white;
+            color: #cecbcb;
             margin-top: -8px;
             display: grid;
             gap: -20px;
@@ -62,42 +62,16 @@
             font-family: "Inter", sans-serif;
             font-size: 14px;
             text-align: center;
-            color: white;
+            color: #cecbcb;
             margin-top: -8px;
             display: grid;
             gap: -20px;
-        }
-
-        .ryzz {
-            font-family: "Inter", sans-serif;
-            color: white;
-            font-size: 13px;
-            font-weight: 500;
-        }
-        .bizz {
-            font-family: "Inter", sans-serif;
-            color: white;
-            font-size: 13px;
-            font-weight: 500;
-        }
-        .github {
-            position: absolute;
-            bottom: 20px;
-            display: flex;
-            gap: 10px;
         }
 
         a {
             text-decoration: none;
             cursor: pointer;
             color: white; /* Added */
-        }
-
-        .icon-github {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            color: white;
         }
     </style>
 </head>
@@ -108,18 +82,6 @@
     <p class="subtitle2">
         {{ $content }}
     </p>
-    <div class="github">
-        <a
-                href="https://github.com/ryzz123"
-                target="_blank"
-                class="icon-github"
-        >
-            <span class="ryzz">Ryzz123</span>
-        </a>
-        <a href="https://github.com/bizz09" target="_blank" class="icon-github">
-            <span class="ryzz">Bizz09</span>
-        </a>
-    </div>
     <div class="background"></div>
 </div>
 </body>

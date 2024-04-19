@@ -1,9 +1,10 @@
 <?php
 
 namespace Lumenity\Framework\app\http\middlewares;
-use eftec\bladeone\BladeOne;
+
 use Exception;
 use Illuminate\Http\Request;
+use Lumenity\Framework\config\common\app\view;
 use Lumenity\Framework\config\common\http\Response;
 
 /**
@@ -27,17 +28,22 @@ class csrf implements Middleware
      */
     public function before(Request $req, Response $res): void
     {
-        // Instantiate BladeOne for rendering views
-        $blade = new BladeOne();
+        /**
+         * Get Blade Instance
+         * This is used to validate the CSRF token.
+         */
+        $blade = view::getInstance()->blade;
 
-        // Validate CSRF token
-        if ($blade->csrfIsValid() !== true) {
+        /**
+         * Validate CSRF Token
+         * If the CSRF token is missing or invalid, render an error view.
+         */
+        if (!$req->input('_token') || $blade->csrfIsValid() !== true) {
             // If CSRF token is missing or invalid, render an error view
-            $res::view('missing', [
-                'title' => '400 | BAD REQUEST',
-                'code' => '400',
-                'message' => 'CSRF Token is missing or invalid.'
-            ]);
+            $res->headers->set('Content-Type', 'application/json');
+            $res->setContent(['error' => 'Invalid CSRF token'])
+                ->setStatusCode(403)
+                ->send();
         }
     }
 }

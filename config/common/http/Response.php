@@ -26,7 +26,7 @@ class Response extends Responses
     /**
      * @throws Exception
      */
-    public static function redirect(string $url): void
+    #[NoReturn] public static function redirect(string $url): void
     {
         View::redirect($url);
     }

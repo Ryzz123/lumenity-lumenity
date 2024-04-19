@@ -4,6 +4,7 @@ namespace Lumenity\Framework\config\common\app;
 
 use eftec\bladeone\BladeOne;
 use Exception;
+use JetBrains\PhpStorm\NoReturn;
 
 /**
  * View Configuration
@@ -18,6 +19,35 @@ class view
 
     /** @var string The path to the cache directory for compiled view templates */
     protected static string $cachePath = __DIR__ . '/../../../bootstrap/cache';
+    /** @var view|null The singleton instance of the view class */
+    private static ?view $instance = null;
+    public BladeOne $blade;
+
+    /**
+     * Constructor
+     *
+     * Initializes the view instance.
+     */
+    private function __construct()
+    {
+        session_start();
+        $this->blade = new BladeOne(self::$viewsPath, self::$cachePath, BladeOne::MODE_AUTO);
+    }
+
+    /**
+     * @return view
+     *
+     * Get Instance
+     *
+     * Returns the singleton instance of the view class.
+     */
+    public static function getInstance(): view
+    {
+        if (self::$instance === null) {
+            self::$instance = new view();
+        }
+        return self::$instance;
+    }
 
     /**
      * Render View
@@ -31,16 +61,16 @@ class view
      */
     public static function render(string $view, array $data = []): void
     {
-        // Set the paths for view templates and cache
-        $views = self::$viewsPath;
-        $cache = self::$cachePath;
-        session_start();
+        /**
+         * Get Blade Instance
+         */
+        $blade = self::getInstance()->blade;
 
-        // Create a new BladeOne instance
-        $blade = new BladeOne($views, $cache, BladeOne::MODE_AUTO);
-
+        // Render the view template and output the result
         // Enable including the scope in the view templates
         $blade->getCsrfToken(); // it's a way to generate the csrf token (if it's not generated yet)
+
+        // Enable including the scope in the view templates
         $blade->includeScope = true;
 
         // Render the view template and output the result
@@ -55,7 +85,7 @@ class view
      * @param string $url The URL to redirect to
      * @return void
      */
-    public static function redirect(string $url): void
+    #[NoReturn] public static function redirect(string $url): void
     {
         // Perform HTTP redirect to the specified URL
         header("Location: " . $url);

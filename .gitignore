@@ -1,6 +1,7 @@
 # Lumenity 5 specific
 vendor
 .idea
+.vscode
 .phpunit.result.cache
 
 # Lumenity 4 specific

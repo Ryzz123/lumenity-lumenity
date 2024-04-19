@@ -61,7 +61,7 @@ class app extends TestCase
     {
         // docs in https://image.intervention.io/v3
         $manager = new ImageManager(new Driver());
-        $image = $manager->read(__DIR__ . '/../../resources/images/lumenity.png');
+        $image = $manager->read(__DIR__ . '/../../resources/images/lumenity.jpg');
 
         $this->assertInstanceOf(ImageManager::class, $manager);
         $this->assertInstanceOf(ImageInterface::class, $image);
