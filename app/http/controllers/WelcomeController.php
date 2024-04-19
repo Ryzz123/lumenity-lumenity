@@ -42,7 +42,10 @@ class WelcomeController
      */
     public function healthCheck(Request $req, Response $res): void
     {
-        $res->setContent(['status' => 'ok'])
+        // Calculate the response time
+        $response = microtime(true) - $req->server('REQUEST_TIME_FLOAT');
+        $response = round($response * 1000, 2);
+        $res->setContent(['status' => 'ok', 'response' => "{$response}ms"])
             ->setStatusCode(200)
             ->send();
     }

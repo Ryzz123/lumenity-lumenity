@@ -27,9 +27,6 @@ class csrf implements Middleware
      */
     public function before(Request $req, Response $res): void
     {
-        // Start a session
-        session_start();
-
         // Instantiate BladeOne for rendering views
         $blade = new BladeOne();
 
