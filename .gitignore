@@ -7,3 +7,7 @@ vendor
 # Lumenity 4 specific
 .env
 node_modules
+
+# Laravel 5 specific
+composer.lock
+package-lock.json

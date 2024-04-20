@@ -1,0 +1,26 @@
+#!/usr/bin/env php
+<?php
+
+/**
+ * Lumenity Framework Console Application
+ *
+ * This script serves as the entry point for running console commands in the Lumenity Framework.
+ * It initializes the console application and executes the requested command.
+ */
+
+// Include Composer's autoloader
+require 'vendor/autoload.php';
+
+use Lumenity\Framework\config\common\app\console;
+use Lumenity\Framework\config\common\commands\command;
+
+// Create a new instance of the console application
+$app = new console();
+
+// Register the commands with the console application
+foreach (command::capture() as $name => $command) {
+    $app->register($name, $command);
+}
+
+// Run the console application
+$app->run();

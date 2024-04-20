@@ -1,6 +1,6 @@
 <?php
 
-require 'vendor/autoload.php';
+require '../vendor/autoload.php';
 
 /**
  * LICENSE: This source file is subject to the MIT License that is bundled
@@ -47,7 +47,9 @@ new connection();
  * the debugging mode, which allows developers to monitor and analyze the
  * execution flow, identify errors, and troubleshoot issues during development.
  */
-DebugHandler::capture();
+if ($_ENV['APP_MODE'] === 'development') {
+    DebugHandler::capture();
+}
 
 /**
  * Capture the website routes

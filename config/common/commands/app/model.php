@@ -1,0 +1,84 @@
+<?php
+
+namespace Lumenity\Framework\config\common\commands\app;
+
+use Rakit\Console\App;
+
+/**
+ * Model Command Class
+ *
+ * This class implements the command interface and provides a method to create a new model in the Lumenity Framework.
+ * It creates a new model file with the specified name and namespace, along with basic model structure.
+ */
+class model implements command
+{
+    /**
+     * Create Model
+     *
+     * Creates a new model with the given name and namespace.
+     *
+     * @param App $app The console application instance
+     * @param string|null $name The name of the model to be created
+     * @return void
+     */
+    public function create(App $app, ?string $name): void
+    {
+        // Check if the name is provided
+        if (!$name) {
+            $app->writeln("Name is required.");
+            return;
+        }
+
+        // Parse the name and generate the model file
+        $nameParts = explode('/', $name);
+        $namespace = 'Lumenity\\Framework\\app\\models';
+        $modelName = ucfirst($nameParts[count($nameParts) - 1]);
+
+        // Create directory structure for the model if it doesn't exist
+        $namespaceDir = implode('\\', array_slice($nameParts, 0, -1));
+        if ($namespaceDir) {
+            $namespaceDir = "\\$namespaceDir";
+        }
+
+        $modelDir = "app/models/$namespaceDir";
+        if (!is_dir($modelDir)) {
+            mkdir($modelDir, 0777, true);
+        }
+
+        // Check if model file already exists
+        $modelFile = "$modelDir/$modelName.php";
+        if (file_exists($modelFile)) {
+            $app->writeln("Model $modelName already exists.");
+            return;
+        }
+
+
+        $tableName = strtolower($modelName);
+
+        // Generate model template
+        $template = <<<EOT
+        <?php
+        
+        namespace $namespace$namespaceDir;
+        
+        use Illuminate\Database\Eloquent\Model;
+        
+        class $modelName extends Model
+        {
+            protected \$table = '$tableName';
+        
+            protected \$casts = [
+                'created_at' => 'datetime',
+                'updated_at' => 'datetime',
+            ];
+        }
+        EOT;
+
+        // Write the model template to the file
+        file_put_contents($modelFile, $template);
+
+        // Display success message
+        $app->writeln("Model $modelName created successfully.");
+    }
+
+}
