@@ -15,11 +15,11 @@ require '../vendor/autoload.php';
  */
 
 use Lumenity\Framework\config\common\app\env;
-use Lumenity\Framework\config\common\handler\DebugHandler;
+use Lumenity\Framework\config\common\app\lumenity;
+use Lumenity\Framework\config\common\app\whoops;
 use Lumenity\Framework\database\connection;
 use Lumenity\Framework\routes\api;
 use Lumenity\Framework\routes\web;
-use Lumenity\Framework\server\App;
 
 /**
  * Capture the environment variables
@@ -48,7 +48,7 @@ new connection();
  * execution flow, identify errors, and troubleshoot issues during development.
  */
 if ($_ENV['APP_MODE'] === 'development') {
-    DebugHandler::capture();
+    whoops::capture();
 }
 
 /**
@@ -80,4 +80,4 @@ api::capture();
  * them to the corresponding controllers or actions based on the defined routes.
  * The application continues to run until it receives a termination signal.
  */
-App::run();
+lumenity::run();

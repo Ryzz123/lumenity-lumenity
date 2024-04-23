@@ -23,7 +23,6 @@ class web
     public static function capture(): void
     {
         // Define website routes here
-
         Route::group('', function () {
             Route::get('/', WelcomeController::class, 'index');
         });

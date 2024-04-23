@@ -3,7 +3,6 @@
 namespace Lumenity\Framework\config\common\app;
 
 use Closure;
-use Lumenity\Framework\server\App;
 
 /**
  * Route Configuration
@@ -172,6 +171,6 @@ class route
         $path = rtrim($prefix, '/') . '/' . ltrim($path, '/');
 
         // Register the route with the application server
-        App::add($method, $path, $controller, $methodController, $middleware);
+        lumenity::add($method, $path, $controller, $methodController, $middleware);
     }
 }

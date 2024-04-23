@@ -6,6 +6,7 @@ use Lumenity\Framework\config\common\commands\app\controller;
 use Lumenity\Framework\config\common\commands\app\middleware;
 use Lumenity\Framework\config\common\commands\app\model;
 use Lumenity\Framework\config\common\commands\app\serve;
+use Lumenity\Framework\config\common\commands\app\tests;
 
 /**
  * Command Class
@@ -28,6 +29,7 @@ class command
             'make:model {name}' => model::class,
             'make:controller {name}' => controller::class,
             'make:middleware {name}' => middleware::class,
+            'make:test {name}' => tests::class
         ];
     }
 }

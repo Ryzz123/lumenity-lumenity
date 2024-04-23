@@ -1,13 +1,13 @@
 <?php
 
-namespace Lumenity\Framework\config\common\validation;
+namespace Lumenity\Framework\config\common\app;
 
-use Symfony\Component\Validator\Validation;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
-use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\PasswordStrength;
+use Symfony\Component\Validator\Validation;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
  * Validator Class
@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Constraints\PasswordStrength;
  * This class provides methods for data validation using Symfony Validator Component.
  * It validates data against specified rules and returns errors and messages.
  */
-class Validator
+class validator
 {
     protected ValidatorInterface $validator;
     protected array $errors;
@@ -52,7 +52,10 @@ class Validator
                 $violation = $this->validator->validate($value, $constraint);
 
                 if ($violation->count() > 0) {
-                    $this->errors[$field][] = $violation[0]->getMessage();
+                    $this->errors[$field][] = (object)[
+                        'message' => $violation[0]->getMessage(),
+                        'invalidValue' => $violation[0]->getInvalidValue(),
+                    ];
                     break;
                 } else {
                     $this->messages[$field] = 'Validation successful';

@@ -3,12 +3,12 @@
 namespace Lumenity\Framework\test\app;
 
 use Exception;
-use Intervention\Image\Interfaces\ImageInterface;
-use PHPUnit\Framework\TestCase;
 use Illuminate\Support\Collection;
-use Intervention\Image\ImageManager;
 use Intervention\Image\Drivers\Gd\Driver;
-use Lumenity\Framework\config\common\validation\Validator;
+use Intervention\Image\ImageManager;
+use Intervention\Image\Interfaces\ImageInterface;
+use Lumenity\Framework\config\common\app\validator;
+use PHPUnit\Framework\TestCase;
 use function PHPUnit\Framework\assertEquals;
 
 /**
@@ -76,7 +76,7 @@ class app extends TestCase
      */
     public function testValidator()
     {
-        $validator = new Validator();
+        $validator = new validator();
         $data = [
             'name' => 'John Doe',
             'email' => 'john@gmail.com',
@@ -89,7 +89,7 @@ class app extends TestCase
 
         if (!$validator->validate($data, $rules)) {
             $errors = $validator->errors();
-            assertEquals('This value is too long. It should have 8 characters or less.', $errors['name'][0]);
+            assertEquals('This value is too long. It should have 8 characters or less.', $errors['name'][0]->message);
         } else {
             $messages = $validator->messages();
             assertEquals('Validation successful', $messages['name']);

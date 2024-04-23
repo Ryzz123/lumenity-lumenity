@@ -1,6 +1,6 @@
 <?php
 
-namespace Lumenity\Framework\config\common\handler;
+namespace Lumenity\Framework\config\common\app;
 
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
@@ -11,7 +11,7 @@ use Whoops\Run;
  * This class handles the capture and configuration of debug handlers for displaying
  * detailed error pages during development.
  */
-class DebugHandler
+class whoops
 {
     /**
      * Capture Debug Information
@@ -36,7 +36,7 @@ class DebugHandler
             $handler->addCustomCss('/css/root/whoops.custom.css');
             // Add custom data table for framework information
             $handler->addDataTable('Lumenity Framework', [
-                'Version' => '3.5.0'
+                'Version' => '3.6.0'
             ]);
         });
 

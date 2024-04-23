@@ -1,10 +1,10 @@
 <?php
 
-namespace Lumenity\Framework\server;
+namespace Lumenity\Framework\config\common\app;
 
 use Exception;
-use Lumenity\Framework\config\common\http\Response;
 use Illuminate\Http\Request;
+use Lumenity\Framework\config\common\http\Response;
 
 /**
  * Application Server
@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
  * This class represents the main application server responsible for routing incoming requests
  * to the appropriate controllers and actions based on defined routes.
  */
-class App
+class lumenity
 {
     /** @var array The array containing registered routes */
     private static array $routes = [];
@@ -64,7 +64,7 @@ class App
 
         // Iterate through registered routes to find a match
         foreach (self::$routes as $route) {
-            $dynamicPath = preg_replace('/\{[a-zA-Z0-9]+\}/', '([a-zA-Z0-9]+)', $route['path']);
+            $dynamicPath = preg_replace('/\{[a-zA-Z0-9-]+\}/', '([a-zA-Z0-9-]+)', $route['path']);
             $regex = '/^' . str_replace('/', '\/', $dynamicPath) . '$/';
 
             // Check if the current route matches the request path and method
