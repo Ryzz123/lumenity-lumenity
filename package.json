@@ -1,6 +1,6 @@
 {
   "name": "lumenity",
-  "version": "3.6.0",
+  "version": "3.6.2",
   "description": "This is a simple PHP framework for building web applications.",
   "main": "index.js",
   "scripts": {

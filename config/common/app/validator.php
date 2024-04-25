@@ -6,6 +6,7 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\PasswordStrength;
+use Symfony\Component\Validator\Constraints\Image;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -20,6 +21,18 @@ class validator
     protected ValidatorInterface $validator;
     protected array $errors;
     protected array $messages;
+    protected static array $rootMessages = [
+        'required' => 'Nilai ini wajib diisi.',
+        'max' => 'Nilai ini terlalu panjang. Harus memiliki karakter {{ limit }} atau kurang.|Nilai ini terlalu panjang. Harus memiliki {{ limit }} karakter atau kurang.',
+        'min' => 'Nilai ini terlalu pendek. Harus memiliki karakter {{ limit }} atau lebih.|Nilai ini terlalu pendek. Itu harus memiliki {{ limit }} karakter atau lebih.',
+        'email' => 'Nilai ini bukan alamat email yang valid.',
+        'password' => 'Kekuatan kata sandi terlalu lemah. Harap gunakan kata sandi yang lebih kuat.',
+        'jpeg' => 'File ini bukan gambar JPEG yang valid.',
+        'png' => 'File ini bukan gambar PNG yang valid.',
+        'gif' => 'File ini bukan gambar GIF yang valid.',
+        'jpg' => 'File ini bukan gambar JPG yang valid.',
+        'maxsize' => 'Filenya terlalu besar. Ukuran maksimum yang diperbolehkan adalah {{ limit }} byte.',
+    ];
 
     /**
      * Constructor
@@ -86,16 +99,37 @@ class validator
 
             switch ($constraintName) {
                 case 'required':
-                    $parsedRules[] = new NotBlank();
+                    $parsedRules[] = new NotBlank(['message' => self::$rootMessages['required']]);
                     break;
                 case 'max':
-                    $parsedRules[] = new Length(['max' => $options[0]]);
+                    $parsedRules[] = new Length(['maxMessage' => self::$rootMessages['max'], 'max' => $options[0]]);
+                    break;
+                case 'min':
+                    $parsedRules[] = new Length(['minMessage' => self::$rootMessages['min'], 'min' => $options[0]]);
                     break;
                 case 'email':
-                    $parsedRules[] = new Email();
+                    $parsedRules[] = new Email(['message' => self::$rootMessages['email']]);
                     break;
                 case 'password':
-                    $parsedRules[] = new PasswordStrength();
+                    $parsedRules[] = new PasswordStrength(['message' => self::$rootMessages['password']]);
+                    break;
+                case 'image':
+                    $parsedRules[] = new Image();
+                    break;
+                case 'jpeg':
+                    $parsedRules[] = new Image(['message' => self::$rootMessages['jpeg'], 'mimeTypes' => ['image/jpeg']]);
+                    break;
+                case 'png':
+                    $parsedRules[] = new Image(['message' => self::$rootMessages['png'], 'mimeTypes' => ['image/png']]);
+                    break;
+                case 'gif':
+                    $parsedRules[] = new Image(['message' => self::$rootMessages['gif'], 'mimeTypes' => ['image/gif']]);
+                    break;
+                case 'jpg':
+                    $parsedRules[] = new Image(['message' => self::$rootMessages['jpg'], 'mimeTypes' => ['image/jpg']]);
+                    break;
+                case 'maxsize':
+                    $parsedRules[] = new Image(['message' => self::$rootMessages['maxsize'], 'maxSize' => $options[0]]);
                     break;
                 default:
                     break;

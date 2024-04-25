@@ -78,7 +78,7 @@ class app extends TestCase
     {
         $validator = new validator();
         $data = [
-            'name' => 'John Doe',
+            'name' => 'John Does',
             'email' => 'john@gmail.com',
         ];
 
@@ -89,7 +89,7 @@ class app extends TestCase
 
         if (!$validator->validate($data, $rules)) {
             $errors = $validator->errors();
-            assertEquals('This value is too long. It should have 8 characters or less.', $errors['name'][0]->message);
+            assertEquals('Nilai ini terlalu panjang. Harus memiliki 8 karakter atau kurang.', $errors['name'][0]->message);
         } else {
             $messages = $validator->messages();
             assertEquals('Validation successful', $messages['name']);

@@ -36,7 +36,7 @@ class whoops
             $handler->addCustomCss('/css/root/whoops.custom.css');
             // Add custom data table for framework information
             $handler->addDataTable('Lumenity Framework', [
-                'Version' => '3.6.0'
+                'Version' => '3.6.2'
             ]);
         });
 
