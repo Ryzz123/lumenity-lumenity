@@ -65,13 +65,7 @@ class controller implements command
         
         class $controller
         {
-            /**
-             * @param Request \$req The HTTP request
-             * @param Response \$res The HTTP response
-             * @return void
-             * @throws Exception
-             */
-            #[NoReturn] public function index(Request \$req, Response \$res): void
+            public function index(Request \$req, Response \$res): void
             {
                 \$res::view('view', [
                     'title' => 'Title Here',

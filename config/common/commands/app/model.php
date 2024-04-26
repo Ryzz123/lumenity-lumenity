@@ -62,9 +62,16 @@ class model implements command
         namespace $namespace$namespaceDir;
         
         use Illuminate\Database\Eloquent\Model;
+        use Ramsey\Uuid\Uuid;
         
         class $modelName extends Model
         {
+            public function __construct(array \$attributes = [])
+            {
+                parent::__construct(\$attributes);
+                \$this->attributes['id'] = Uuid::uuid4()->toString();
+            }
+            
             protected \$table = '$tableName';
         
             protected \$casts = [

@@ -5,6 +5,7 @@ namespace Lumenity\Framework\config\common\http;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
 use Lumenity\Framework\config\common\app\pagination;
+use Lumenity\Framework\config\common\app\store;
 use Lumenity\Framework\config\common\app\view as View;
 use Illuminate\Http\Response as Responses;
 
@@ -30,6 +31,14 @@ class Response extends Responses
     public static function pagination(array $data): pagination
     {
         return new pagination($data);
+    }
+
+    /**
+     * @throws Exception
+     */
+    public static function store(string $path, object $file, ?string $hashname = null): string
+    {
+        return store::store($path, $file, $hashname);
     }
 
     /**

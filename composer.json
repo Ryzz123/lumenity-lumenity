@@ -1,6 +1,6 @@
 {
   "name": "lumenity/framework",
-  "version": "3.6.2",
+  "version": "3.6.5",
   "description": "This is a simple PHP framework for building web applications.",
   "keywords": [
     "framework",
@@ -40,7 +40,8 @@
     "monolog/monolog": "3.5.0",
     "intervention/image": "^3.5",
     "symfony/validator": "^7.0",
-    "rakit/console": "^0.1.3"
+    "rakit/console": "^0.1.3",
+    "ramsey/uuid": "^3.9"
   },
   "require-dev": {
     "phpunit/phpunit": "9.5.26"
