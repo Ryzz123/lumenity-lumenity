@@ -75,6 +75,7 @@ class model implements command
             protected \$table = '$tableName';
         
             protected \$casts = [
+                'id' => 'string',
                 'created_at' => 'datetime',
                 'updated_at' => 'datetime',
             ];
