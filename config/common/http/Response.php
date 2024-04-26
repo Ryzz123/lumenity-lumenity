@@ -44,6 +44,14 @@ class Response extends Responses
     /**
      * @throws Exception
      */
+    public static function delete(string $path, string $fileName): bool
+    {
+        return store::delete($path, $fileName);
+    }
+
+    /**
+     * @throws Exception
+     */
     #[NoReturn] public static function redirect(string $url): void
     {
         View::redirect($url);

@@ -44,6 +44,26 @@ class store
     }
 
     /**
+     * @throws Exception
+     *
+     * Delete File
+     * Deletes the specified file from the filesystem.
+     */
+    public static function delete(string $path, string $fileName): bool
+    {
+        try {
+            $filePath = $path . '/' . $fileName;
+            if (file_exists($filePath)) {
+                return unlink($filePath);
+            }
+
+            return false;
+        } catch (Exception $exception) {
+            throw new Exception($exception->getMessage());
+        }
+    }
+
+    /**
      * Generate Hash Name
      *
      * Generates a unique hash name for the stored file based on the original file name.
