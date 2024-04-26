@@ -22,7 +22,7 @@ class store
      * @return string The stored file name with its extension
      * @throws Exception If an error occurs during file storage
      */
-    public static function store(string $path, $file, ?string $hashname = null): string {
+    public static function store(string $path, mixed $file, ?string $hashname = null): string {
         try {
             if (!file_exists($path)) {
                 mkdir($path, 0777, true);
