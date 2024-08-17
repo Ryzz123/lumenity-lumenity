@@ -24,12 +24,12 @@ class lumenity
      *
      * @param string $method The HTTP method (GET, POST, PUT, DELETE, etc.)
      * @param string $path The URL path pattern for the route
-     * @param string $controller The name of the controller class handling the route
-     * @param string $function The name of the function or method within the controller class
+     * @param string|callable $controller The name of the controller class handling the route
+     * @param string|null $function The name of the function or method within the controller class
      * @param array $middleware An array of middleware classes to be executed before handling the route
      * @return void
      */
-    public static function add(string $method, string $path, string $controller, string $function, array $middleware = []): void
+    public static function add(string $method, string $path, string|callable $controller, ?string $function, array $middleware = []): void
     {
         self::$routes[] = [
             'method' => $method,
@@ -84,16 +84,14 @@ class lumenity
                     $function = $route['function'];
                     call_user_func_array([$controller, $function], [$req, $res, ...$matches]);
                 } else {
-                    // If no controller action is defined, return a 404 error
-                    http_response_code(404);
-                    echo "Not Found";
+                    call_user_func($route['Controller'], $req, $res, ...$matches);
                 }
                 return;
             }
         }
 
         // If no matching route is found, render a 404 error page
-        $res::view('missing', [
+        $res::view('error', [
             'title' => '404 | PAGE NOT FOUND',
             'code' => '404',
             'message' => "NOT FOUND"

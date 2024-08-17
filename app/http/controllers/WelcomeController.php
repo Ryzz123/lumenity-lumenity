@@ -9,9 +9,8 @@ class WelcomeController
 {
     public function index(Request $req, Response $res): void
     {
-        $res::view('welcome', [
-            'title' => 'Welcome to Lumenity Framework',
-            'content' => 'This is a simple PHP framework for building web applications.'
+        $res::view('view', [
+            'title' => 'Title Here'
         ]);
     }
 }

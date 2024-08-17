@@ -2,6 +2,8 @@
 
 namespace Lumenity\Framework\config\common\app;
 
+use Illuminate\Support\Collection;
+
 /**
  * Pagination Class
  *
@@ -63,28 +65,31 @@ class pagination
      *
      * Paginates the data array based on the current page and limit.
      *
-     * @return array An array containing the paginated data and pagination information
+     * @return paginationresult An Pagination Class containing the paginated data and pagination information
      */
-    public function paginate(): array
+    public function paginate(): paginationresult
     {
         $totalPages = ceil($this->total / $this->limit);
         $offset = ($this->page - 1) * $this->limit;
-        $data = array_slice($this->data, $offset, $this->limit);
+        $collection = new Collection($this->data);
+        $collection = $collection->slice($offset, $this->limit);
 
         $prevPages = $this->calculatePrevPages();
         $nextPages = $this->calculateNextPages($totalPages);
 
-        return [
-            'data' => $data,
-            'pagination' => [
-                'page' => $this->page,
-                'total' => $this->total,
-                'total_pages' => (int)$totalPages,
-                'limit' => $this->limit,
-                'prev' => $prevPages,
-                'next' => $nextPages,
-            ],
-        ];
+        return self::Result($collection, [
+            'page' => $this->page,
+            'total' => $this->total,
+            'total_pages' => (int)$totalPages,
+            'limit' => $this->limit,
+            'prev' => $prevPages,
+            'next' => $nextPages,
+        ]);
+    }
+
+    private static function Result(Collection $collection, array $pagination): paginationresult
+    {
+        return new paginationresult($collection, $pagination);
     }
 
     /**

@@ -41,9 +41,19 @@ class csrf implements Middleware
         if (!$req->input('_token') || $blade->csrfIsValid() !== true) {
             // If CSRF token is missing or invalid, render an error view
             $res->headers->set('Content-Type', 'application/json');
-            $res->setContent(['error' => 'Invalid CSRF token'])
-                ->setStatusCode(403)
-                ->send();
+            $parsed_url = parse_url($req->url());
+            $base_url = $parsed_url['scheme'] . '://' . $parsed_url['host'] . ':' . $parsed_url['port'] . '/';
+            if ($base_url == $_ENV['APP_URL']) {
+                $res::view('error', [
+                    'title' => '500 | ERROR 500',
+                    'code' => '500',
+                    'message' => "Error 500: Internal Server Error",
+                ]);
+            } else {
+                $res->setContent(['error' => 'Invalid CSRF token'])
+                    ->setStatusCode(403)
+                    ->send();
+            }
             exit();
         }
     }

@@ -5,6 +5,7 @@ namespace Lumenity\Framework\config\common\http;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
 use Lumenity\Framework\config\common\app\pagination;
+use Lumenity\Framework\config\common\app\paginationresult;
 use Lumenity\Framework\config\common\app\view as View;
 use Illuminate\Http\Response as Responses;
 
@@ -27,9 +28,9 @@ class Response extends Responses
     /**
      * @throws Exception
      */
-    public static function pagination(array $data): pagination
+    public static function pagination(array $data, int $limit, int $page): paginationresult
     {
-        return new pagination($data);
+        return (new pagination($data))->limit($limit)->page($page)->paginate();
     }
 
     /**

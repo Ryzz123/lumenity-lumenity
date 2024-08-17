@@ -7,6 +7,7 @@ use Lumenity\Framework\config\common\app\store;
 use Lumenity\Framework\config\common\app\log as Log;
 use Illuminate\Database\Capsule\Manager;
 use Lumenity\Framework\config\common\app\validator;
+use Illuminate\Support\Collection;
 use Throwable;
 
 /**
@@ -149,5 +150,18 @@ class service
         } else {
             return [];
         }
+    }
+
+    /**
+     * Create Collection
+     *
+     * Creates a new collection instance from the given data.
+     *
+     * @param array $data The data to be converted into a collection
+     * @return Collection The collection instance containing the data
+     */
+    public static function collection(array $data): Collection
+    {
+        return new Collection($data);
     }
 }

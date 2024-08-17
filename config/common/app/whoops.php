@@ -2,6 +2,7 @@
 
 namespace Lumenity\Framework\config\common\app;
 
+use Exception;
 use Whoops\Handler\PrettyPageHandler;
 use Whoops\Run;
 
@@ -20,6 +21,7 @@ class whoops
      * and display pretty error pages during development.
      *
      * @return void
+     * @throws Exception
      */
     public static function capture(): void
     {
@@ -36,12 +38,21 @@ class whoops
             $handler->addCustomCss('/css/root/whoops.custom.css');
             // Add custom data table for framework information
             $handler->addDataTable('Lumenity Framework', [
-                'Version' => '3.6.5'
+                'Version' => '3.8.0'
             ]);
         });
 
         // Push the configured handler to the Whoops stack
-        $whoops->pushHandler($handler);
+        if ($_ENV['APP_DEBUG'] === 'true' && $_ENV['APP_MODE'] === 'development') {
+            $whoops->pushHandler($handler);
+        } else {
+            view::render('error', [
+                'title' => '500 | ERROR 500',
+                'code' => '500',
+                'message' => "Error 500: Internal Server Error",
+            ]);
+        }
+
 
         // Register Whoops error handler
         $whoops->register();

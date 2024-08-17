@@ -47,9 +47,7 @@ new connection();
  * the debugging mode, which allows developers to monitor and analyze the
  * execution flow, identify errors, and troubleshoot issues during development.
  */
-if ($_ENV['APP_MODE'] === 'development') {
-    whoops::capture();
-}
+whoops::capture();
 
 /**
  * Capture the website routes

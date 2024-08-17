@@ -4,9 +4,6 @@ namespace Lumenity\Framework\test\app;
 
 use Exception;
 use Illuminate\Support\Collection;
-use Intervention\Image\Drivers\Gd\Driver;
-use Intervention\Image\ImageManager;
-use Intervention\Image\Interfaces\ImageInterface;
 use Lumenity\Framework\config\common\app\validator;
 use PHPUnit\Framework\TestCase;
 use function PHPUnit\Framework\assertEquals;
@@ -48,23 +45,6 @@ class app extends TestCase
         });
 
         $this->assertEquals([2 => 3, 3 => 4, 4 => 5], $filtered->all());
-    }
-
-    /**
-     * Test Media Repository
-     *
-     * This method tests the media repository functionality.
-     *
-     * @return void
-     */
-    public function testMediaRepository()
-    {
-        // docs in https://image.intervention.io/v3
-        $manager = new ImageManager(new Driver());
-        $image = $manager->read(__DIR__ . '/../../resources/images/lumenity.jpg');
-
-        $this->assertInstanceOf(ImageManager::class, $manager);
-        $this->assertInstanceOf(ImageInterface::class, $image);
     }
 
     /**

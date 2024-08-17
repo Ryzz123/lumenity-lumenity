@@ -2,8 +2,9 @@
 
 namespace Lumenity\Framework\routes;
 
-use Lumenity\Framework\app\http\controllers\WelcomeController;
+use Illuminate\Http\Request;
 use Lumenity\Framework\config\common\app\route as Route;
+use Lumenity\Framework\config\common\http\Response;
 
 /**
  * Website Routes
@@ -23,8 +24,11 @@ class web
     public static function capture(): void
     {
         // Define website routes here
-        Route::group('', function () {
-            Route::get('/', WelcomeController::class, 'index');
+        Route::get('/', function (Request $req, Response $res) {
+            $res::view('welcome', [
+                'title' => 'Welcome to Lumenity Framework',
+                'content' => 'This is a simple PHP framework for building web applications.'
+            ]);
         });
     }
 }

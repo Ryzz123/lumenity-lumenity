@@ -70,19 +70,28 @@ class route
     /**
      * Define GET Route
      *
-     * Defines a route for the GET HTTP method with the specified path, controller, method, and optional middleware.
+     * Defines a route for the GET HTTP method with the specified path, handler, and optional middleware.
+     * The handler can be either a controller class with a method or a closure (callback function).
      *
      * @param string $path The URL path pattern for the route
-     * @param string $controller The name of the controller class handling the route
-     * @param string $method
+     * @param callable|string $handler The controller class and method or a callback function handling the route
+     * @param string|null $method The method name if the handler is a controller class (optional)
      * @param array $middleware An array of middleware classes to be executed before handling the route
      * @return void
      */
-    public static function get(string $path, string $controller, string $method, array $middleware = []): void
+    public static function get(string $path, callable|string $handler, ?string $method = null, array $middleware = []): void
     {
         $route = self::getInstance();
-        $route->addRoute('GET', $path, $controller, $method, $middleware);
+
+        if (is_callable($handler)) {
+            // Handle the case where $handler is a callable (function)
+            $route->addRoute('GET', $path, $handler, null, $middleware);
+        } else {
+            // Handle the case where $handler is a controller class
+            $route->addRoute('GET', $path, $handler, $method, $middleware);
+        }
     }
+
 
     /**
      * Define POST Route
@@ -90,15 +99,22 @@ class route
      * Defines a route for the POST HTTP method with the specified path, controller, method, and optional middleware.
      *
      * @param string $path The URL path pattern for the route
-     * @param string $controller The name of the controller class handling the route
+     * @param callable|string $handler The name of the controller class handling the route
      * @param string $method
      * @param array $middleware An array of middleware classes to be executed before handling the route
      * @return void
      */
-    public static function post(string $path, string $controller, string $method, array $middleware = []): void
+    public static function post(string $path, callable|string $handler, string $method, array $middleware = []): void
     {
         $route = self::getInstance();
-        $route->addRoute('POST', $path, $controller, $method, $middleware);
+
+        if (is_callable($handler)) {
+            // Handle the case where $handler is a callable (function)
+            $route->addRoute('POST', $path, $handler, null, $middleware);
+        } else {
+            // Handle the case where $handler is a controller class
+            $route->addRoute('POST', $path, $handler, $method, $middleware);
+        }
     }
 
     /**
@@ -107,15 +123,22 @@ class route
      * Defines a route for the PUT HTTP method with the specified path, controller, method, and optional middleware.
      *
      * @param string $path The URL path pattern for the route
-     * @param string $controller The name of the controller class handling the route
+     * @param callable|string $handler The name of the controller class handling the route
      * @param string $method
      * @param array $middleware An array of middleware classes to be executed before handling the route
      * @return void
      */
-    public static function put(string $path, string $controller, string $method, array $middleware = []): void
+    public static function put(string $path, callable|string $handler, string $method, array $middleware = []): void
     {
         $route = self::getInstance();
-        $route->addRoute('PUT', $path, $controller, $method, $middleware);
+
+        if (is_callable($handler)) {
+            // Handle the case where $handler is a callable (function)
+            $route->addRoute('PUT', $path, $handler, null, $middleware);
+        } else {
+            // Handle the case where $handler is a controller class
+            $route->addRoute('PUT', $path, $handler, $method, $middleware);
+        }
     }
 
     /**
@@ -124,15 +147,22 @@ class route
      * Defines a route for the DELETE HTTP method with the specified path, controller, method, and optional middleware.
      *
      * @param string $path The URL path pattern for the route
-     * @param string $controller The name of the controller class handling the route
+     * @param callable|string $handler The name of the controller class handling the route
      * @param string $method
      * @param array $middleware An array of middleware classes to be executed before handling the route
      * @return void
      */
-    public static function delete(string $path, string $controller, string $method, array $middleware = []): void
+    public static function delete(string $path, callable|string $handler, string $method, array $middleware = []): void
     {
         $route = self::getInstance();
-        $route->addRoute('DELETE', $path, $controller, $method, $middleware);
+
+        if (is_callable($handler)) {
+            // Handle the case where $handler is a callable (function)
+            $route->addRoute('DELETE', $path, $handler, null, $middleware);
+        } else {
+            // Handle the case where $handler is a controller class
+            $route->addRoute('DELETE', $path, $handler, $method, $middleware);
+        }
     }
 
     /**
@@ -141,15 +171,22 @@ class route
      * Defines a route for the PATCH HTTP method with the specified path, controller, method, and optional middleware.
      *
      * @param string $path The URL path pattern for the route
-     * @param string $controller The name of the controller class handling the route
+     * @param callable|string $handler The name of the controller class handling the route
      * @param string $method
      * @param array $middleware An array of middleware classes to be executed before handling the route
      * @return void
      */
-    public static function patch(string $path, string $controller, string $method, array $middleware = []): void
+    public static function patch(string $path, callable|string $handler, string $method, array $middleware = []): void
     {
         $route = self::getInstance();
-        $route->addRoute('PATCH', $path, $controller, $method, $middleware);
+
+        if (is_callable($handler)) {
+            // Handle the case where $handler is a callable (function)
+            $route->addRoute('PATCH', $path, $handler, null, $middleware);
+        } else {
+            // Handle the case where $handler is a controller class
+            $route->addRoute('PATCH', $path, $handler, $method, $middleware);
+        }
     }
 
     /**
@@ -159,18 +196,20 @@ class route
      *
      * @param string $method The HTTP method (GET, POST, PUT, DELETE, etc.)
      * @param string $path The URL path pattern for the route
-     * @param string $controller The name of the controller class handling the route
-     * @param string $methodController The name of the method within the controller class
+     * @param string|callable $controller The name of the controller class handling the route
+     * @param string|null $methodController The name of the method within the controller class
      * @param array $middleware An array of middleware classes to be executed before handling the route
      * @return void
      */
-    protected function addRoute(string $method, string $path, string $controller, string $methodController, array $middleware = []): void
+    protected function addRoute(string $method, string $path, string|callable $controller, ?string $methodController, array $middleware = []): void
     {
         // Concatenate route path with group prefix, if exists
         $prefix = $this->prefix ?? '';
-        $path = rtrim($prefix, '/') . '/' . ltrim($path, '/');
+        $path = $path === '/' || $path === '' ? '' : ltrim($path, '/');
+        $fullPath = rtrim($prefix, '/') . ($path ? '/' . $path : '');
+        $fullPath = $fullPath === '' ? '/' : $fullPath;
 
         // Register the route with the application server
-        lumenity::add($method, $path, $controller, $methodController, $middleware);
+        lumenity::add($method, $fullPath, $controller, $methodController, $middleware);
     }
 }

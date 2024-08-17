@@ -6,7 +6,10 @@ use Symfony\Component\Validator\Constraints\Email;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\PasswordStrength;
-use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints\Date;
+use Symfony\Component\Validator\Constraints\Time;
+use Symfony\Component\Validator\Constraints\IsNull;
+use Symfony\Component\Validator\Constraints\NotNull;
 use Symfony\Component\Validator\Validation;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
@@ -27,11 +30,10 @@ class validator
         'min' => 'Nilai ini terlalu pendek. Harus memiliki karakter {{ limit }} atau lebih.|Nilai ini terlalu pendek. Itu harus memiliki {{ limit }} karakter atau lebih.',
         'email' => 'Nilai ini bukan alamat email yang valid.',
         'password' => 'Kekuatan kata sandi terlalu lemah. Harap gunakan kata sandi yang lebih kuat.',
-        'jpeg' => 'File ini bukan gambar JPEG yang valid.',
-        'png' => 'File ini bukan gambar PNG yang valid.',
-        'gif' => 'File ini bukan gambar GIF yang valid.',
-        'jpg' => 'File ini bukan gambar JPG yang valid.',
-        'maxsize' => 'Filenya terlalu besar. Ukuran maksimum yang diperbolehkan adalah {{ limit }} byte.',
+        'date' => 'Nilai ini bukan tanggal yang valid.',
+        'time' => 'Nilai ini bukan waktu yang valid.',
+        'isNull' => 'Nilai ini harus null.',
+        'notNull' => 'Nilai ini tidak boleh null.',
     ];
 
     /**
@@ -113,23 +115,17 @@ class validator
                 case 'password':
                     $parsedRules[] = new PasswordStrength(['message' => self::$rootMessages['password']]);
                     break;
-                case 'image':
-                    $parsedRules[] = new Image();
+                case 'date':
+                    $parsedRules[] = new Date(['message' => self::$rootMessages['date']]);
                     break;
-                case 'jpeg':
-                    $parsedRules[] = new Image(['message' => self::$rootMessages['jpeg'], 'mimeTypes' => ['image/jpeg']]);
+                case 'time':
+                    $parsedRules[] = new Time(['message' => self::$rootMessages['time']]);
                     break;
-                case 'png':
-                    $parsedRules[] = new Image(['message' => self::$rootMessages['png'], 'mimeTypes' => ['image/png']]);
+                case 'nullable':
+                    $parsedRules[] = new IsNull(['message' => self::$rootMessages['isNull']]);
                     break;
-                case 'gif':
-                    $parsedRules[] = new Image(['message' => self::$rootMessages['gif'], 'mimeTypes' => ['image/gif']]);
-                    break;
-                case 'jpg':
-                    $parsedRules[] = new Image(['message' => self::$rootMessages['jpg'], 'mimeTypes' => ['image/jpg']]);
-                    break;
-                case 'maxsize':
-                    $parsedRules[] = new Image(['message' => self::$rootMessages['maxsize'], 'maxSize' => $options[0]]);
+                case 'notnull':
+                    $parsedRules[] = new NotNull(['message' => self::$rootMessages['notNull']]);
                     break;
                 default:
                     break;
