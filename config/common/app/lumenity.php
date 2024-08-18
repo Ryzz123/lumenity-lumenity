@@ -5,6 +5,7 @@ namespace Lumenity\Framework\config\common\app;
 use Exception;
 use Illuminate\Http\Request;
 use Lumenity\Framework\config\common\http\Response;
+use Lumenity\Framework\config\common\utils\container;
 
 /**
  * Application Server
@@ -34,7 +35,7 @@ class lumenity
         self::$routes[] = [
             'method' => $method,
             'path' => $path,
-            'Controller' => $controller,
+            'controller' => $controller,
             'function' => $function,
             'middleware' => $middleware
         ];
@@ -55,6 +56,9 @@ class lumenity
         $req = Request::capture();
         $res = new Response();
 
+        // Get the container instance
+        $container = container::getInstance()::$container;
+
         // Determine the request path and method
         $path = '/';
         if (isset($_SERVER['PATH_INFO'])) {
@@ -64,14 +68,16 @@ class lumenity
 
         // Iterate through registered routes to find a match
         foreach (self::$routes as $route) {
+            // Convert the route path to a regular expression
             $dynamicPath = preg_replace('/\{[a-zA-Z0-9-]+\}/', '([a-zA-Z0-9-]+)', $route['path']);
             $regex = '/^' . str_replace('/', '\/', $dynamicPath) . '$/';
 
             // Check if the current route matches the request path and method
             if (preg_match($regex, $path, $matches) && $method == $route['method']) {
                 // Execute middleware before handling the route
+                // Middleware classes are executed in the order they are defined
                 foreach ($route['middleware'] as $middleware) {
-                    $instance = new $middleware;
+                    $instance = $container->make($middleware);
                     $instance->before($req, $res);
                 }
 
@@ -80,11 +86,13 @@ class lumenity
 
                 // Call the controller action
                 if (isset($route['function'])) {
-                    $controller = new $route['Controller'];
+                    // If the controller is a class name, create an instance of the class
+                    $controllerInstance = $container->make($route['controller']);
                     $function = $route['function'];
-                    call_user_func_array([$controller, $function], [$req, $res, ...$matches]);
+                    call_user_func_array([$controllerInstance, $function], [$req, $res, ...$matches]);
                 } else {
-                    call_user_func($route['Controller'], $req, $res, ...$matches);
+                    // If the controller is a callable function, call the function directly
+                    call_user_func($route['controller'], $req, $res, ...$matches);
                 }
                 return;
             }

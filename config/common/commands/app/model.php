@@ -2,6 +2,7 @@
 
 namespace Lumenity\Framework\config\common\commands\app;
 
+use Lumenity\Framework\config\common\interface\command;
 use Rakit\Console\App;
 
 /**

@@ -5,6 +5,7 @@ namespace Lumenity\Framework\config\common\app;
 use eftec\bladeone\BladeOne;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
+use Lumenity\Framework\config\common\utils\container;
 
 /**
  * View Configuration
@@ -22,6 +23,7 @@ class view
     /** @var view|null The singleton instance of the view class */
     private static ?view $instance = null;
     public BladeOne $blade;
+    private static ioc $container;
 
     /**
      * Constructor
@@ -32,6 +34,7 @@ class view
     {
         session_start();
         $this->blade = new BladeOne(self::$viewsPath, self::$cachePath, BladeOne::MODE_AUTO);
+        self::$container = container::getInstance()::$container;
     }
 
     /**
@@ -72,6 +75,11 @@ class view
 
         // Enable including the scope in the view templates
         $blade->includeScope = true;
+
+        // Set the inject resolver to resolve dependencies from the container
+        $blade->setInjectResolver(function ($name) {
+            return self::$container->make($name);
+        });
 
         // Render the view template and output the result
         echo $blade->run($view, $data);
