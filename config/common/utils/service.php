@@ -98,7 +98,7 @@ class service
      * @return bool True if the file is successfully deleted, false otherwise
      * @throws Exception If an error occurs during file deletion
      */
-    public static function delete(string $path, string $fileName): bool
+    public static function drop(string $path, string $fileName): bool
     {
         return Store::delete($path, $fileName);
     }

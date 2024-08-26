@@ -53,8 +53,12 @@ class model implements command
             return;
         }
 
+        function convertToSnakeCase($modelName): string
+        {
+            return strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $modelName));
+        }
 
-        $tableName = strtolower($modelName);
+        $tableName = convertToSnakeCase($modelName);
 
         // Generate model template
         $template = <<<EOT
@@ -74,6 +78,8 @@ class model implements command
             }
             
             protected \$table = '$tableName';
+            
+            protected \$fillable = ['id'];
         
             protected \$casts = [
                 'id' => 'string',

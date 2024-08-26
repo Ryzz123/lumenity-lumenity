@@ -32,9 +32,7 @@ class container
         $container = new ioc();
 
         // Array of service providers to be registered
-        $providers = [
-            \Lumenity\Framework\app\providers\ServiceProvider::class
-        ];
+        $providers = require __DIR__ . '/../../../bootstrap/providers.php';
 
         // Registering the service providers with the ioc container
         $container->registerProviders($providers);

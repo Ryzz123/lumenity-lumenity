@@ -19,7 +19,7 @@ class view
     protected static string $viewsPath = __DIR__ . '/../../../resources/views';
 
     /** @var string The path to the cache directory for compiled view templates */
-    protected static string $cachePath = __DIR__ . '/../../../bootstrap/cache';
+    protected static string $cachePath = __DIR__ . '/../../../storage/framework/views';
     /** @var view|null The singleton instance of the view class */
     private static ?view $instance = null;
     public BladeOne $blade;

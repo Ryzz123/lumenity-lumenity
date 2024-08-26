@@ -3,7 +3,9 @@
 namespace Lumenity\Framework\config\common\app;
 
 use Exception;
+use Illuminate\Contracts\Container\BindingResolutionException;
 use Illuminate\Http\Request;
+use JetBrains\PhpStorm\NoReturn;
 use Lumenity\Framework\config\common\http\Response;
 use Lumenity\Framework\config\common\utils\container;
 
@@ -15,34 +17,34 @@ use Lumenity\Framework\config\common\utils\container;
  */
 class lumenity
 {
-    /** @var array The array containing registered routes */
+    /** @var array $routes The array containing registered routes */
     private static array $routes = [];
 
     /**
-     * Add Route
+     * Add a Route
      *
      * Registers a new route with the specified method, path, controller, function, and optional middleware.
      *
      * @param string $method The HTTP method (GET, POST, PUT, DELETE, etc.)
      * @param string $path The URL path pattern for the route
-     * @param string|callable $controller The name of the controller class handling the route
-     * @param string|null $function The name of the function or method within the controller class
-     * @param array $middleware An array of middleware classes to be executed before handling the route
+     * @param string|callable $controller The name of the controller class or callable handling the route
+     * @param string|null $function The name of the function or method within the controller class (optional)
+     * @param array $middleware An array of middleware classes to be executed before handling the route (optional)
      * @return void
      */
-    public static function add(string $method, string $path, string|callable $controller, ?string $function, array $middleware = []): void
+    public static function add(string $method, string $path, string|callable $controller, ?string $function = null, array $middleware = []): void
     {
         self::$routes[] = [
-            'method' => $method,
-            'path' => $path,
+            'method'     => $method,
+            'path'       => $path,
             'controller' => $controller,
-            'function' => $function,
+            'function'   => $function,
             'middleware' => $middleware
         ];
     }
 
     /**
-     * Run Application
+     * Run the Application
      *
      * Handles incoming requests by matching them against registered routes
      * and executing the appropriate controller action.
@@ -52,57 +54,103 @@ class lumenity
      */
     public static function run(): void
     {
-        // Capture the request and response objects
-        $req = Request::capture();
-        $res = new Response();
+        self::loadRoutes();
 
-        // Get the container instance
-        $container = container::getInstance()::$container;
+        $request  = Request::capture();
+        $response = new Response();
+        $container = Container::getInstance()::$container;
 
-        // Determine the request path and method
-        $path = '/';
-        if (isset($_SERVER['PATH_INFO'])) {
-            $path = $_SERVER['PATH_INFO'];
-        }
+        $path = $_SERVER['PATH_INFO'] ?? '/';
         $method = $_SERVER['REQUEST_METHOD'];
 
-        // Iterate through registered routes to find a match
         foreach (self::$routes as $route) {
-            // Convert the route path to a regular expression
-            $dynamicPath = preg_replace('/\{[a-zA-Z0-9-]+\}/', '([a-zA-Z0-9-]+)', $route['path']);
-            $regex = '/^' . str_replace('/', '\/', $dynamicPath) . '$/';
-
-            // Check if the current route matches the request path and method
-            if (preg_match($regex, $path, $matches) && $method == $route['method']) {
-                // Execute middleware before handling the route
-                // Middleware classes are executed in the order they are defined
-                foreach ($route['middleware'] as $middleware) {
-                    $instance = $container->make($middleware);
-                    $instance->before($req, $res);
-                }
-
-                // Extract route parameters from the path
-                array_shift($matches);
-
-                // Call the controller action
-                if (isset($route['function'])) {
-                    // If the controller is a class name, create an instance of the class
-                    $controllerInstance = $container->make($route['controller']);
-                    $function = $route['function'];
-                    call_user_func_array([$controllerInstance, $function], [$req, $res, ...$matches]);
-                } else {
-                    // If the controller is a callable function, call the function directly
-                    call_user_func($route['controller'], $req, $res, ...$matches);
-                }
+            if (self::matchRoute($route, $path, $method, $matches)) {
+                self::handleRoute($route, $matches, $request, $response, $container);
                 return;
             }
         }
 
-        // If no matching route is found, render a 404 error page
-        $res::view('error', [
-            'title' => '404 | PAGE NOT FOUND',
-            'code' => '404',
-            'message' => "NOT FOUND"
+        self::handleNotFound();
+    }
+
+    /**
+     * Load all route files from the routes directory
+     *
+     * @return void
+     * @throws Exception
+     */
+    private static function loadRoutes(): void
+    {
+        $routeDir = __DIR__ . '/../../../routes';
+
+        if (is_dir($routeDir) && is_readable($routeDir)) {
+            $routes = glob($routeDir . '/*.php');
+
+            foreach ($routes as $route) {
+                require $route;
+            }
+        } else {
+            throw new Exception("Cannot access routes directory: {$routeDir}");
+        }
+    }
+
+    /**
+     * Match the current request with a registered route
+     *
+     * @param array $route The registered route to match against
+     * @param string $path The requested path
+     * @param string $method The HTTP method used for the request
+     * @param array|null $matches Matched parameters from the route
+     * @return bool Whether the route matches the request
+     */
+    private static function matchRoute(array $route, string $path, string $method, ?array &$matches): bool
+    {
+        $dynamicPath = preg_replace('/\{[a-zA-Z0-9-]+\}/', '([a-zA-Z0-9-]+)', $route['path']);
+        $regex = '/^' . str_replace('/', '\/', $dynamicPath) . '$/';
+
+        return preg_match($regex, $path, $matches) && $method === $route['method'];
+    }
+
+    /**
+     * Handle a matched route
+     *
+     * @param array $route The matched route
+     * @param array $matches The matched parameters from the route
+     * @param Request $request The current request instance
+     * @param Response $response The current response instance
+     * @param ioc $container The DI container instance
+     * @return void
+     * @throws BindingResolutionException
+     */
+    private static function handleRoute(array $route, array $matches, Request $request, Response $response, ioc $container): void
+    {
+        foreach ($route['middleware'] as $middleware) {
+            $middlewareInstance = $container->make($middleware);
+            $middlewareInstance->before($request, $response);
+        }
+
+        array_shift($matches);
+
+        if ($route['function'] !== null) {
+            $controllerInstance = $container->make($route['controller']);
+            call_user_func_array([$controllerInstance, $route['function']], [$request, $response, ...$matches]);
+        } else {
+            call_user_func($route['controller'], $request, $response, ...$matches);
+        }
+    }
+
+    /**
+     * Handle a 404 Not Found error
+     *
+     * @return void
+     * @throws Exception
+     */
+    #[NoReturn] private static function handleNotFound(): void
+    {
+        view('error', [
+            'title'   => '404 | PAGE NOT FOUND',
+            'code'    => '404',
+            'message' => 'NOT FOUND'
         ]);
     }
 }

@@ -18,8 +18,6 @@ use Lumenity\Framework\config\common\app\env;
 use Lumenity\Framework\config\common\app\lumenity;
 use Lumenity\Framework\config\common\app\whoops;
 use Lumenity\Framework\database\connection;
-use Lumenity\Framework\routes\api;
-use Lumenity\Framework\routes\web;
 
 /**
  * Capture the environment variables
@@ -32,15 +30,6 @@ use Lumenity\Framework\routes\web;
 env::capture();
 
 /**
- * Capture the database connection
- *
- * This step initializes and captures the database connection. It sets up
- * the database connection parameters, establishes a connection to the
- * database server, and prepares the database for use by the application.
- */
-new connection();
-
-/**
  * Capture the debug handler
  *
  * This step captures debugging information for the application. It enables
@@ -50,25 +39,13 @@ new connection();
 whoops::capture();
 
 /**
- * Capture the website routes
+ * Capture the database connection
  *
- * This step defines and captures the routes for the website. Routes define
- * the URL endpoints and map them to specific controller actions or callback
- * functions. By capturing the routes, the application knows how to handle
- * incoming requests and direct them to the appropriate controllers or actions.
+ * This step initializes and captures the database connection. It sets up
+ * the database connection parameters, establishes a connection to the
+ * database server, and prepares the database for use by the application.
  */
-web::capture();
-
-/**
- * Capture the API routes
- *
- * This step defines and captures the routes for the API. API routes are used
- * to define the endpoints for the application programming interface (API) and
- * map them to specific controller actions or callback functions. By capturing
- * the API routes, the application knows how to handle incoming API requests
- * and direct them to the appropriate controllers or actions.
- */
-api::capture();
+connection::getInstance();
 
 /**
  * Run the application

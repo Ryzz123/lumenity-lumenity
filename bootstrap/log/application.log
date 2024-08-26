@@ -1,3 +1,0 @@
-[2024-04-04T19:57:34.634857+02:00] application.WARNING: Testing welcome message [] []
-[2024-04-04T19:57:47.648224+02:00] application.INFO: Testing welcome message [] [][2024-04-12T06:06:13.727129+07:00] application.INFO: Request received: GET /api/health-check from ::1 at 2024-04-12 06:06:13 [] [][2024-04-19T15:29:56.511020+07:00] application.INFO: Request received: GET /api/health-check from 127.0.0.1 at 2024-04-19 15:29:56 [] [][2024-04-19T22:12:06.588473+07:00] application.INFO: Request received: GET /api/health-check from 127.0.0.1 at 2024-04-19 22:12:06 [] []
-[2024-04-19T22:12:09.988206+07:00] application.INFO: Request received: GET /api/health-check from 127.0.0.1 at 2024-04-19 22:12:09 [] []

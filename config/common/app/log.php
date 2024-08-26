@@ -4,6 +4,7 @@ namespace Lumenity\Framework\config\common\app;
 
 use Monolog\Handler\StreamHandler;
 use Monolog\Logger;
+use Monolog\Handler\RotatingFileHandler;
 
 /**
  * Logging Configuration
@@ -26,10 +27,14 @@ class log
     private static function getLogger(): Logger
     {
         if (!isset(self::$logger)) {
+            $logFile = __DIR__ . '/../../../storage/log/application.log';
+            $rotatingHandler = new RotatingFileHandler($logFile, 30, Logger::DEBUG);
+            $rotatingHandler->setFilenameFormat('{filename}-{date}', 'Y-m-d');
             self::$logger = new Logger('application');
-            self::$logger->pushHandler(new StreamHandler(__DIR__ . '/../../../bootstrap/log/application.log'));
+            self::$logger->pushHandler($rotatingHandler);
             self::$logger->pushHandler(new StreamHandler('php://stdout'));
         }
+
         return self::$logger;
     }
 

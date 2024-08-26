@@ -68,7 +68,7 @@ class controller implements command
         {
             public function index(Request \$req, Response \$res): void
             {
-                \$res::view('view', [
+                view('view', [
                     'title' => 'Title Here',
                 ]);
             }

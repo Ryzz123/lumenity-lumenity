@@ -5,25 +5,41 @@ namespace Lumenity\Framework\database;
 use Illuminate\Database\Capsule\Manager;
 
 /**
- * Database Bootstrap
+ * Class connection
  *
- * This class initializes the database connection using Laravel's Eloquent ORM.
+ * This class is responsible for managing the database connection using the Illuminate Database Capsule Manager.
+ * It follows the Singleton design pattern to ensure that only one instance of this class exists during the application's lifecycle.
+ *
+ * @package Lumenity\Framework\database
  */
 class connection
 {
     /**
-     * Bootstrap Database
+     * The single instance of the class.
      *
-     * Initializes the database connection using the configuration settings
-     * defined in the environment variables.
+     * @var self|null
      */
-    public function __construct()
-    {
-        // Create a new instance of Capsule Manager
-        $capsule = new Manager;
+    private static ?self $instance = null;
 
-        // Add connection configuration
-        $capsule->addConnection([
+    /**
+     * The Capsule Manager instance.
+     *
+     * @var Manager
+     */
+    private Manager $capsule;
+
+    /**
+     * connection constructor.
+     *
+     * The constructor is private to prevent creating multiple instances of this class.
+     * It initializes the Capsule Manager and sets up the database connection using the environment variables.
+     * It also sets the Capsule Manager instance as global and boots the Eloquent ORM.
+     */
+    private function __construct()
+    {
+        $this->capsule = new Manager;
+
+        $this->capsule->addConnection([
             'driver'    => $_ENV['DB_CONNECTION'] ?? 'mysql',
             'host'      => $_ENV['DB_HOST'] ?? 'localhost',
             'port'      => $_ENV['DB_PORT'] ?? '3306',
@@ -36,9 +52,26 @@ class connection
         ]);
 
         // Set the Capsule Manager instance as global
-        $capsule->setAsGlobal();
+        $this->capsule->setAsGlobal();
 
         // Boot Eloquent ORM
-        $capsule->bootEloquent();
+        $this->capsule->bootEloquent();
+    }
+
+    /**
+     * Get the single instance of the class.
+     *
+     * This method is used to get the single instance of this class.
+     * If the instance does not exist, it creates a new one.
+     *
+     * @return self The single instance of the class.
+     */
+    public static function getInstance(): self
+    {
+        if (self::$instance === null) {
+            self::$instance = new self();
+        }
+
+        return self::$instance;
     }
 }
