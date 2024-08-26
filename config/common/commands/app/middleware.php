@@ -59,6 +59,7 @@ class middleware implements command
         
         use Illuminate\Http\Request;
         use Lumenity\Framework\config\common\http\Response;
+        use Lumenity\Framework\config\common\interface\Middleware;
         
         class $middleware implements Middleware
         {

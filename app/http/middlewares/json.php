@@ -4,6 +4,7 @@ namespace Lumenity\Framework\app\http\middlewares;
 
 use Illuminate\Http\Request;
 use Lumenity\Framework\config\common\http\Response;
+use Lumenity\Framework\config\common\interface\Middleware;
 
 /**
  * JSON Middleware

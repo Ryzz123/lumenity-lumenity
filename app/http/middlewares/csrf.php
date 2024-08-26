@@ -6,6 +6,7 @@ use Exception;
 use Illuminate\Http\Request;
 use Lumenity\Framework\config\common\app\view;
 use Lumenity\Framework\config\common\http\Response;
+use Lumenity\Framework\config\common\interface\Middleware;
 
 /**
  * CSRF Middleware
@@ -44,7 +45,7 @@ class csrf implements Middleware
             $parsed_url = parse_url($req->url());
             $base_url = $parsed_url['scheme'] . '://' . $parsed_url['host'] . ':' . $parsed_url['port'] . '/';
             if ($base_url == $_ENV['APP_URL']) {
-                $res::view('error', [
+                view('error', [
                     'title' => '500 | ERROR 500',
                     'code' => '500',
                     'message' => "Error 500: Internal Server Error",

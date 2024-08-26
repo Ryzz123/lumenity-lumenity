@@ -1,9 +1,26 @@
 <?php
 
 // Import the View class from the Lumenity Framework
+use Illuminate\Contracts\Container\BindingResolutionException;
 use JetBrains\PhpStorm\NoReturn;
 use Lumenity\Framework\config\common\app\log as Log;
 use Lumenity\Framework\config\common\app\view as View;
+use Lumenity\Framework\config\common\utils\container;
+
+// Check if the function 'ioc' already exists
+if (!function_exists('ioc')) {
+    /**
+     * Get the instance of the ioc class.
+     *
+     * This function returns the instance of the ioc class, which is used to manage the dependency injection ioc.
+     *
+     * @throws BindingResolutionException
+     */
+    function ioc(string $abstract)
+    {
+        return container::getInstance()::$container->make($abstract);
+    }
+}
 
 // Check if the function 'view' already exists
 if (!function_exists('view')) {

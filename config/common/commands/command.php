@@ -3,6 +3,7 @@
 namespace Lumenity\Framework\config\common\commands;
 
 use Lumenity\Framework\config\common\commands\app\controller;
+use Lumenity\Framework\config\common\commands\app\generate;
 use Lumenity\Framework\config\common\commands\app\middleware;
 use Lumenity\Framework\config\common\commands\app\model;
 use Lumenity\Framework\config\common\commands\app\serve;
@@ -32,6 +33,7 @@ class command
             'make:middleware {name}' => middleware::class,
             'make:test {name}' => tests::class,
             'make:service {name}' => service::class,
+            'key:generate' => generate::class
         ];
     }
 }
