@@ -98,7 +98,7 @@ class model implements command
 
         // Run the migration command
         if ($config === 'm' || $config === 'migrate') {
-            passthru("php artisan make:migrate $modelName");
+            passthru("php artisan make:migration $modelName");
         }
     }
 
