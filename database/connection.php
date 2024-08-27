@@ -3,6 +3,7 @@
 namespace Lumenity\Framework\database;
 
 use Illuminate\Database\Capsule\Manager;
+use Illuminate\Database\Schema\Builder;
 
 /**
  * Class connection
@@ -28,6 +29,12 @@ class connection
      */
     private Manager $capsule;
 
+    // The schema builder instance
+    private static Builder $schema;
+
+    // The connection
+    private static ?Manager $connection = null;
+
     /**
      * connection constructor.
      *
@@ -37,25 +44,49 @@ class connection
      */
     private function __construct()
     {
-        $this->capsule = new Manager;
+        if (self::$connection) {
+            $this->capsule = self::$connection;
+            self::$schema = $this->capsule->schema();
+        } else {
+            $this->capsule = new Manager;
 
-        $this->capsule->addConnection([
-            'driver'    => $_ENV['DB_CONNECTION'] ?? 'mysql',
-            'host'      => $_ENV['DB_HOST'] ?? 'localhost',
-            'port'      => $_ENV['DB_PORT'] ?? '3306',
-            'database'  => $_ENV['DB_DATABASE'] ?? 'Lumenity',
-            'username'  => $_ENV['DB_USERNAME'] ?? 'root',
-            'password'  => $_ENV['DB_PASSWORD'] ?? '',
-            'charset'   => 'utf8',
-            'collation' => 'utf8_unicode_ci',
-            'prefix'    => '',
-        ]);
+            $this->capsule->addConnection([
+                'driver' => $_ENV['DB_CONNECTION'] ?? 'mysql',
+                'host' => $_ENV['DB_HOST'] ?? 'localhost',
+                'port' => $_ENV['DB_PORT'] ?? '3306',
+                'database' => $_ENV['DB_DATABASE'] ?? 'Lumenity',
+                'username' => $_ENV['DB_USERNAME'] ?? 'root',
+                'password' => $_ENV['DB_PASSWORD'] ?? '',
+                'charset' => 'utf8',
+                'collation' => 'utf8_unicode_ci',
+                'prefix' => '',
+            ]);
 
-        // Set the Capsule Manager instance as global
-        $this->capsule->setAsGlobal();
+            // Set the Capsule Manager instance as global
+            $this->capsule->setAsGlobal();
 
-        // Boot Eloquent ORM
-        $this->capsule->bootEloquent();
+            // Boot Eloquent ORM
+            $this->capsule->bootEloquent();
+
+            // Set the schema builder instance
+            self::$schema = $this->capsule->schema();
+
+            // Set the connection
+            self::$connection = $this->capsule;
+        }
+    }
+
+    /**
+     * Get the schema builder instance.
+     *
+     * This method is used to get the schema builder instance.
+     *
+     * @return Builder The schema builder instance.
+     */
+    public static function schema(): Builder
+    {
+        connection::getInstance();
+        return self::$schema;
     }
 
     /**

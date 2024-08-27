@@ -20,9 +20,10 @@ class model implements command
      *
      * @param App $app The console application instance
      * @param string|null $name The name of the model to be created
+     * @param string|null $config The configuration for the model
      * @return void
      */
-    public function create(App $app, ?string $name): void
+    public function create(App $app, ?string $name, ?string $config): void
     {
         // Check if the name is provided
         if (!$name) {
@@ -94,6 +95,11 @@ class model implements command
 
         // Display success message
         $app->writeln("Model $modelName created successfully.");
+
+        // Run the migration command
+        if ($config === 'm' || $config === 'migrate') {
+            passthru("php artisan make:migrate $modelName");
+        }
     }
 
 }

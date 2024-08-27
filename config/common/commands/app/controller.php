@@ -21,9 +21,10 @@ class controller implements command
      *
      * @param App $app The console application instance
      * @param string|null $name The name of the controller to be created
+     * @param string|null $config The configuration for the controller
      * @return void
      */
-    public function create(App $app, ?string $name): void
+    public function create(App $app, ?string $name, ?string $config): void
     {
         if (!$name) {
             $app->writeln("Name is required.");

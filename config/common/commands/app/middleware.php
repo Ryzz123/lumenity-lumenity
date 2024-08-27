@@ -19,9 +19,10 @@ class middleware implements command
      *
      * @param App $app
      * @param string|null $name
+     * @param string|null $config
      * @return void
      */
-    public function create(App $app, ?string $name): void
+    public function create(App $app, ?string $name, ?string $config): void
     {
         if (!$name) {
             $app->writeln("Name is required.");

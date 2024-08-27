@@ -41,9 +41,9 @@ class console
     public static function register(string $name, string $command): void
     {
         // Define and register the console command
-        self::$app->command($name, '', function (?string $name = null) use ($command) {
+        self::$app->command($name, '', function (?string $name = null, ?string $config = null) use ($command) {
             $command = new $command();
-            $command->create(self::$app, $name);
+            $command->create(self::$app, $name, $config);
         });
     }
 

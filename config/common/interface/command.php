@@ -22,6 +22,7 @@ interface command
      *
      * @param App $app An instance of the App class.
      * @param string|null $name An optional name for the command.
+     * @param string|null $config An optional configuration for the command.
      */
-    public function create(App $app, ?string $name): void;
+    public function create(App $app, ?string $name, ?string $config): void;
 }

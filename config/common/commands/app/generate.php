@@ -21,9 +21,10 @@ class generate implements command
      *
      * @param App $app The application instance.
      * @param string|null $name The name of the application. Currently not used.
+     * @param string|null $config The configuration for the application. Currently not used.
      * @throws RandomException If the random_bytes function fails.
      */
-    public function create(App $app, ?string $name): void
+    public function create(App $app, ?string $name, ?string $config): void
     {
         // Create a new Dotenv instance pointing to the root directory of the application.
         $dotenv = Dotenv::createImmutable(".");

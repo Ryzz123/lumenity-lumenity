@@ -9,6 +9,12 @@ use Lumenity\Framework\config\common\commands\app\model;
 use Lumenity\Framework\config\common\commands\app\serve;
 use Lumenity\Framework\config\common\commands\app\service;
 use Lumenity\Framework\config\common\commands\app\tests;
+use Lumenity\Framework\config\common\commands\migrations\create;
+use Lumenity\Framework\config\common\commands\migrations\fresh;
+use Lumenity\Framework\config\common\commands\migrations\migrate;
+use Lumenity\Framework\config\common\commands\migrations\refresh;
+use Lumenity\Framework\config\common\commands\migrations\rollback;
+use Lumenity\Framework\config\common\commands\migrations\status;
 
 /**
  * Command Class
@@ -28,12 +34,17 @@ class command
     {
         return [
             'serve' => serve::class,
-            'make:model {name}' => model::class,
+            'make:model {name} {config?}' => model::class,
             'make:controller {name}' => controller::class,
             'make:middleware {name}' => middleware::class,
             'make:test {name}' => tests::class,
             'make:service {name}' => service::class,
-            'key:generate' => generate::class
+            'key:generate' => generate::class,
+            'make:migration {name}' => create::class,
+            'migrate' => migrate::class,
+            'migrate:rollback' => rollback::class,
+            'migrate:refresh' => refresh::class,
+            'migrate:status' => status::class,
         ];
     }
 }
