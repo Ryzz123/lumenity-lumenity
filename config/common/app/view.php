@@ -75,7 +75,9 @@ class view
 
         // Enable including the scope in the view templates
         $blade->includeScope = true;
-        $blade->setIsCompiled(false);
+
+        // Set the compiled flag based on the application environment
+        $blade->setIsCompiled($_ENV['APP_DEBUG'] === 'false');
 
         // Set the inject resolver to resolve dependencies from the container
         $blade->setInjectResolver(function ($name) {
