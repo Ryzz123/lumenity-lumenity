@@ -16,10 +16,10 @@ use Lumenity\Framework\config\common\utils\container;
 class view
 {
     /** @var string The path to the directory containing view templates */
-    protected static string $viewsPath = __DIR__ . '/../../../resources/views';
+    public static string $viewsPath = __DIR__ . '/../../../resources/views';
 
     /** @var string The path to the cache directory for compiled view templates */
-    protected static string $cachePath = __DIR__ . '/../../../storage/framework/views';
+    public static string $cachePath = __DIR__ . '/../../../storage/framework/views';
     /** @var view|null The singleton instance of the view class */
     private static ?view $instance = null;
     public BladeOne $blade;
@@ -75,6 +75,7 @@ class view
 
         // Enable including the scope in the view templates
         $blade->includeScope = true;
+        $blade->setIsCompiled(false);
 
         // Set the inject resolver to resolve dependencies from the container
         $blade->setInjectResolver(function ($name) {

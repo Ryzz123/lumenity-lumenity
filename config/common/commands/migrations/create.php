@@ -76,7 +76,7 @@ class create implements command
         {
             public function up(): void
             {
-                Schema::schema()->create('$table', function (Blueprint \$table) {
+                Schema::schema()->create('table', function (Blueprint \$table) {
                     \$table->id();
                     \$table->timestamps();
                 });
@@ -84,7 +84,7 @@ class create implements command
 
             public function down(): void
             {
-                Schema::schema()->dropIfExists('$table');
+                Schema::schema()->dropIfExists('table');
             }
         }
         EOT;

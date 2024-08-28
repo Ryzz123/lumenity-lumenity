@@ -1,6 +1,6 @@
 {
   "name": "lumenity/framework",
-  "version": "4.1.0",
+  "version": "5.0.0",
   "description": "This is a simple PHP framework for building web applications.",
   "keywords": [
     "framework",
@@ -55,7 +55,8 @@
   "require-dev": {
     "phpunit/phpunit": "9.5.26",
     "robmorgan/phinx": "^0.16.2",
-    "symfony/yaml": "^7.1"
+    "symfony/yaml": "^7.1",
+    "fakerphp/faker": "^1.23"
   },
   "minimum-stability": "stable",
   "prefer-stable": true

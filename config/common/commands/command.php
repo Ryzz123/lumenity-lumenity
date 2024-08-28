@@ -15,6 +15,10 @@ use Lumenity\Framework\config\common\commands\migrations\migrate;
 use Lumenity\Framework\config\common\commands\migrations\refresh;
 use Lumenity\Framework\config\common\commands\migrations\rollback;
 use Lumenity\Framework\config\common\commands\migrations\status;
+use Lumenity\Framework\config\common\commands\seeds\createseed;
+use Lumenity\Framework\config\common\commands\seeds\run;
+use Lumenity\Framework\config\common\commands\view\cache;
+use Lumenity\Framework\config\common\commands\view\clear;
 
 /**
  * Command Class
@@ -41,10 +45,14 @@ class command
             'make:service {name}' => service::class,
             'key:generate' => generate::class,
             'make:migration {name}' => create::class,
+            'make:seed {name}' => createseed::class,
             'migrate' => migrate::class,
             'migrate:rollback' => rollback::class,
             'migrate:refresh' => refresh::class,
             'migrate:status' => status::class,
+            'seed:run' => run::class,
+            'view:cache' => cache::class,
+            'view:clear' => clear::class,
         ];
     }
 }
