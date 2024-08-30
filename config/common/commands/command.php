@@ -38,7 +38,7 @@ class command
     {
         return [
             'serve' => serve::class,
-            'make:model {name} {config?}' => model::class,
+            'make:model {name}' => model::class,
             'make:controller {name}' => controller::class,
             'make:middleware {name}' => middleware::class,
             'make:test {name}' => tests::class,
