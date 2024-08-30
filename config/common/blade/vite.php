@@ -40,7 +40,7 @@ class vite
                 if ($extension === 'css') {
                     $links[] = "<link rel='stylesheet' href='$url' type='text/css' />";
                 } elseif ($extension === 'js') {
-                    $scripts[] = "<script src='$url' defer></script>";
+                    $scripts[] = "<script type='module' src='$url' defer></script>";
                 }
             } else {
                 // If the 'APP_DEBUG' environment variable is not set to 'true', the application is in production mode.
@@ -54,7 +54,7 @@ class vite
                 if ($extension === 'css') {
                     $links[] = "<link rel='stylesheet' href='$safePath' type='text/css' />";
                 } elseif ($extension === 'js') {
-                    $scripts[] = "<script src='$safePath' defer></script>";
+                    $scripts[] = "<script type='module' src='$safePath' defer></script>";
                 }
             }
         }
