@@ -18,15 +18,16 @@ class service implements command
     /**
      * Create
      *
-     * This method creates a new service.
+     * This method creates a new middleware in the application.
      *
      * @param App $app
-     * @param string|null $name
-     * @param string|null $config
+     * @param array $args
+     * @param array $option
      * @return void
      */
-    public function create(App $app, ?string $name, ?string $config): void
+    public function create(App $app, array $args, array $option): void
     {
+        $name = $args['name'] ?? null;
         if (!$name) {
             $app->writeln("Name is required.");
             return;

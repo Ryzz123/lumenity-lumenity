@@ -13,19 +13,16 @@ class status implements command
 {
 
     /**
-     * Check the status of migrations.
+     * Create
      *
-     * @param App $app The console application instance.
-     * @param string|null $name The name of the migration to check the status for.
-     * @param string|null $config The configuration for the migration.
+     * This method creates a new middleware in the application.
+     *
+     * @param App $app
+     * @param array $args
+     * @param array $option
      * @return void
-     *
-     * This method checks the status of all migrations.
-     * The status is displayed in the console.
-     * The method uses the phinx migration tool to check the status of the migrations.
-     * The configuration for phinx is provided in the config/common/utils/phinx.php file.
      */
-    public function create(App $app, ?string $name, ?string $config): void
+    public function create(App $app, array $args, array $option): void
     {
         // Run the status command
         passthru("php " . __DIR__ . "/../../../../vendor/bin/phinx status --configuration=config/common/utils/phinx.php");

@@ -17,17 +17,16 @@ class clear implements command
 {
 
     /**
-     * The create method.
+     * Create
      *
-     * This method is used to clear the cache for the views. It gets all the files in the cache directory and deletes them.
-     * After the cache has been cleared, it outputs a message to the console.
+     * This method creates a new middleware in the application.
      *
-     * @param App $app An instance of the Rakit\Console\App class.
-     * @param string|null $name This parameter is not used in this method.
-     * @param string|null $config This parameter is not used in this method.
+     * @param App $app
+     * @param array $args
+     * @param array $option
      * @return void
      */
-    public function create(App $app, ?string $name, ?string $config): void
+    public function create(App $app, array $args, array $option): void
     {
         $directory = view::$cachePath;
         $files = glob($directory . '/*');

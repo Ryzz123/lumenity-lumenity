@@ -16,18 +16,19 @@ class createseed implements command
 {
 
     /**
-     * The create method.
+     * Create
      *
-     * This method is used to create a new database seed. It checks if the provided name is valid and if a seed with the same name already exists.
-     * If the checks pass, it creates a new seed file and writes a template for the seed class into it.
+     * This method creates a new middleware in the application.
      *
-     * @param App $app An instance of the Rakit\Console\App class.
-     * @param string|null $name The name of the seed to create.
-     * @param string|null $config The configuration for the seed.
+     * @param App $app
+     * @param array $args
+     * @param array $option
      * @return void
      */
-    public function create(App $app, ?string $name, ?string $config): void
+    public function create(App $app, array $args, array $option): void
     {
+        // Get the name of the seed
+        $name = $args["name"] ?? null;
         if (!$name) {
             $app->writeln("Name is required.");
             return;

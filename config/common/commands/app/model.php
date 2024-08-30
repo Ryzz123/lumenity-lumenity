@@ -14,18 +14,19 @@ use Rakit\Console\App;
 class model implements command
 {
     /**
-     * Create Model
+     * Create
      *
-     * Creates a new model with the given name and namespace.
+     * This method creates a new middleware in the application.
      *
-     * @param App $app The console application instance
-     * @param string|null $name The name of the model to be created
-     * @param string|null $config The configuration for the model
+     * @param App $app
+     * @param array $args
+     * @param array $option
      * @return void
      */
-    public function create(App $app, ?string $name, ?string $config): void
+    public function create(App $app, array $args, array $option): void
     {
         // Check if the name is provided
+        $name = $args['name'] ?? null;
         if (!$name) {
             $app->writeln("Name is required.");
             return;
@@ -97,8 +98,13 @@ class model implements command
         $app->writeln("Model $modelName created successfully.");
 
         // Run the migration command
-        if ($config === 'm' || $config === 'migrate') {
+        if (array_intersect(['--migrate', '-m'], $option)) {
             passthru("php artisan make:migration $modelName");
+        }
+
+        // Run the factory command
+        if (array_intersect(['--factory', '-f'], $option)) {
+            passthru("php artisan make:factory $modelName" . "Factory");
         }
     }
 

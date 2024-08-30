@@ -16,17 +16,16 @@ class run implements command
 {
 
     /**
-     * The create method.
+     * Create
      *
-     * This method is used to run all the database seeds. It executes the phinx seed:run command which runs all the available seeds.
-     * After the seeds have been run, it outputs a message to the console.
+     * This method creates a new middleware in the application.
      *
-     * @param App $app An instance of the Rakit\Console\App class.
-     * @param string|null $name The name of the seed to run. This parameter is not used in this method.
-     * @param string|null $config The configuration for the seed. This parameter is not used in this method.
+     * @param App $app
+     * @param array $args
+     * @param array $option
      * @return void
      */
-    public function create(App $app, ?string $name, ?string $config): void
+    public function create(App $app, array $args, array $option): void
     {
         passthru("php " . __DIR__ . "/../../../../vendor/bin/phinx seed:run --configuration=config/common/utils/phinx.php");
 

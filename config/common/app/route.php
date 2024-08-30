@@ -47,11 +47,18 @@ class route
         // Get the singleton instance of the Route class
         $route = self::getInstance();
 
-        // Set the prefix for the group
-        $route->setPrefix($prefix);
+        // Save the current prefix to restore it later
+        $previousPrefix = $route->prefix;
+
+        // Set the new prefix by concatenating the previous one
+        $newPrefix = rtrim($previousPrefix, '/') . '/' . ltrim($prefix, '/');
+        $route->setPrefix($newPrefix);
 
         // Execute the callback function to define routes within the group
         $callback($route);
+
+        // Restore the previous prefix after group processing
+        $route->setPrefix($previousPrefix);
     }
 
     /**
@@ -59,10 +66,10 @@ class route
      *
      * Sets the prefix for the grouped routes.
      *
-     * @param string $prefix The common prefix for the grouped routes
+     * @param string|null $prefix The common prefix for the grouped routes
      * @return void
      */
-    protected function setPrefix(string $prefix): void
+    protected function setPrefix(?string $prefix): void
     {
         $this->prefix = $prefix;
     }
@@ -188,6 +195,39 @@ class route
             $route->addRoute('PATCH', $path, $handler, $method, $middleware);
         }
     }
+
+    /**
+     * Define OPTIONS Route
+     *
+     * Defines a route for the OPTIONS HTTP method with the specified path, controller, method, and optional middleware.
+     *
+     * @param array $methods
+     * @param string $path The URL path pattern for the route
+     * @param callable|string $handler The name of the controller class handling the route
+     * @param string|null $method
+     * @param array $middleware An array of middleware classes to be executed before handling the route
+     * @return void
+     */
+    public static function match(array $methods, string $path, callable|string $handler, ?string $method = null, array $middleware = []): void
+    {
+        $route = self::getInstance();
+
+        foreach ($methods as $httpMethod) {
+            $httpMethod = strtoupper($httpMethod);
+
+            // Check if there are specific middleware for this HTTP method
+            $methodMiddleware = $middleware[$httpMethod] ?? [];
+
+            if (is_callable($handler)) {
+                // Handle the case where $handler is a callable (function)
+                $route->addRoute($httpMethod, $path, $handler, null, $methodMiddleware);
+            } else {
+                // Handle the case where $handler is a controller class
+                $route->addRoute($httpMethod, $path, $handler, $method, $methodMiddleware);
+            }
+        }
+    }
+
 
     /**
      * Add Route

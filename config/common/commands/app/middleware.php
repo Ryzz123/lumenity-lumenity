@@ -18,12 +18,14 @@ class middleware implements command
      * This method creates a new middleware in the application.
      *
      * @param App $app
-     * @param string|null $name
-     * @param string|null $config
+     * @param array $args
+     * @param array $option
      * @return void
      */
-    public function create(App $app, ?string $name, ?string $config): void
+    public function create(App $app, array $args, array $option): void
     {
+        // Get the name of the middleware from the command arguments
+        $name = $args['name'] ?? null;
         if (!$name) {
             $app->writeln("Name is required.");
             return;
@@ -58,7 +60,7 @@ class middleware implements command
         
         namespace $namespace$namespaceDir;
         
-        use Illuminate\Http\Request;
+        use Lumenity\Framework\config\common\http\Request;
         use Lumenity\Framework\config\common\http\Response;
         use Lumenity\Framework\config\common\interface\Middleware;
         

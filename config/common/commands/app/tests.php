@@ -15,24 +15,26 @@ class tests implements command
 {
 
     /**
-     * Create Test
+     * Create
      *
-     * Creates a new test with the given name and namespace.
+     * This method creates a new middleware in the application.
      *
-     * @param App $app The console application instance
-     * @param string|null $name The name of the test to be created
-     * @param string|null $config The configuration for the test
+     * @param App $app
+     * @param array $args
+     * @param array $option
      * @return void
      */
-    public function create(App $app, ?string $name, ?string $config): void
+    public function create(App $app, array $args, array $option): void
     {
+        // Get the name of the test from the command arguments
+        $name = $args['name'] ?? null;
         if (!$name) {
             $app->writeln("Name is required.");
             return;
         }
 
         $nameParts = explode('/', $name);
-        $namespace = 'Lumenity\\Framework\\test\\app';
+        $namespace = 'Lumenity\\Framework\\tests\\feature';
         $test = $nameParts[count($nameParts) - 1];
 
         $namespaceDir = implode('\\', array_slice($nameParts, 0, -1));
@@ -40,7 +42,7 @@ class tests implements command
             $namespaceDir = "\\$namespaceDir";
         }
 
-        $testDir = "test/app/$namespaceDir";
+        $testDir = "tests/feature/$namespaceDir";
         if (!is_dir($testDir)) {
             mkdir($testDir, 0777, true);
         }
@@ -60,11 +62,7 @@ class tests implements command
         
         class $test extends TestCase
         {
-            public function testWelcome(): void
-            {
-                // Perform the welcome message test
-                \$this->assertEquals('Welcome to Lumenity Framework', 'Welcome to Lumenity Framework');
-            }
+            
         }
         
         EOT;

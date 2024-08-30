@@ -15,17 +15,19 @@ class controller implements command
 {
 
     /**
-     * Create Controller
+     * Create
      *
-     * Creates a new controller with the given name and namespace.
+     * This method creates a new middleware in the application.
      *
-     * @param App $app The console application instance
-     * @param string|null $name The name of the controller to be created
-     * @param string|null $config The configuration for the controller
+     * @param App $app
+     * @param array $args
+     * @param array $option
      * @return void
      */
-    public function create(App $app, ?string $name, ?string $config): void
+    public function create(App $app, array $args, array $option): void
     {
+        // Get the name of the controller from the command arguments
+        $name = $args['name'] ?? null;
         if (!$name) {
             $app->writeln("Name is required.");
             return;
@@ -60,14 +62,9 @@ class controller implements command
         
         namespace $namespace$namespaceDir;
         
-        use Exception;
-        use Illuminate\Http\Request;
-        use JetBrains\PhpStorm\NoReturn;
-        use Lumenity\Framework\config\common\http\Response;
-        
         class $controller
         {
-            public function index(Request \$req, Response \$res): void
+            public function index(): void
             {
                 view('view', [
                     'title' => 'Title Here',

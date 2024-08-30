@@ -41,9 +41,14 @@ class console
     public static function register(string $name, string $command): void
     {
         // Define and register the console command
-        self::$app->command($name, '', function (?string $name = null, ?string $config = null) use ($command) {
+        self::$app->command($name, '', function (...$args) use ($command) {
+            $argv = $GLOBALS['argv'];
+            $options = array_filter($argv, function ($arg) {
+                return str_starts_with($arg, '-');
+            });
+
             $command = new $command();
-            $command->create(self::$app, $name, $config);
+            $command->create(self::$app, $args, $options);
         });
     }
 

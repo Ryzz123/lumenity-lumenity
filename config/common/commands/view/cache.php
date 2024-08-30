@@ -21,18 +21,17 @@ class cache implements command
 {
 
     /**
-     * The create method.
+     * Create
      *
-     * This method is used to create a cache for the views. It gets all the view files in the views directory and compiles them.
-     * After the views have been compiled, it outputs a message to the console.
+     * This method creates a new middleware in the application.
      *
-     * @param App $app An instance of the Rakit\Console\App class.
-     * @param string|null $name This parameter is not used in this method.
-     * @param string|null $config This parameter is not used in this method.
-     * @throws Exception If there is an error during the compilation of the views.
+     * @param App $app
+     * @param array $args
+     * @param array $option
      * @return void
+     * @throws Exception
      */
-    public function create(App $app, ?string $name, ?string $config): void
+    public function create(App $app, array $args, array $option): void
     {
         $blade = view::getInstance()->blade;
         $directory = view::$viewsPath;

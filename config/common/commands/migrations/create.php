@@ -13,22 +13,19 @@ class create implements command
 {
 
     /**
-     * Create a new migration.
+     * Create
      *
-     * @param App $app The console application instance.
-     * @param string|null $name The name of the migration to be created.
-     * @param string|null $config The configuration for the migration.
+     * This method creates a new middleware in the application.
+     *
+     * @param App $app
+     * @param array $args
+     * @param array $option
      * @return void
-     *
-     * This method creates a new migration file with the provided name.
-     * The name must start with a capital letter.
-     * If a migration with the same name already exists, the method will not create a new one.
-     * The new migration file will be created in the /database/migrations directory.
-     * The migration file will contain a basic template for a new table creation.
      */
-    public function create(App $app, ?string $name, ?string $config): void
+    public function create(App $app, array $args, array $option): void
     {
         // Check if the name is provided
+        $name = $args['name'] ?? null;
         if (!$name) {
             $app->writeln("Name is required.");
             return;
@@ -76,7 +73,7 @@ class create implements command
         {
             public function up(): void
             {
-                Schema::schema()->create('table', function (Blueprint \$table) {
+                Schema::schema()->create('$table', function (Blueprint \$table) {
                     \$table->id();
                     \$table->timestamps();
                 });
@@ -84,7 +81,7 @@ class create implements command
 
             public function down(): void
             {
-                Schema::schema()->dropIfExists('table');
+                Schema::schema()->dropIfExists('$table');
             }
         }
         EOT;

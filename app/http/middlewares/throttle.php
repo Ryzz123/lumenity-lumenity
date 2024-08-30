@@ -3,7 +3,7 @@
 namespace Lumenity\Framework\app\http\middlewares;
 
 use Exception;
-use Illuminate\Http\Request;
+use Lumenity\Framework\config\common\http\Request;
 use Lumenity\Framework\config\common\http\Response;
 use Lumenity\Framework\config\common\interface\Middleware;
 
@@ -13,7 +13,7 @@ use Lumenity\Framework\config\common\interface\Middleware;
  * This middleware class handles limiting access to certain routes or actions.
  * It is used to implement rate limiting or access control mechanisms.
  */
-class limit implements Middleware
+class throttle implements Middleware
 {
     /**
      * Execute Before Request Handling

@@ -4,10 +4,10 @@ namespace Lumenity\Framework\config\common\app;
 
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
-use Illuminate\Http\Request;
 use JetBrains\PhpStorm\NoReturn;
-use Lumenity\Framework\config\common\http\Response;
-use Lumenity\Framework\config\common\utils\container;
+use ReflectionException;
+use ReflectionFunction;
+use ReflectionMethod;
 
 /**
  * Application Server
@@ -55,17 +55,12 @@ class lumenity
     public static function run(): void
     {
         self::loadRoutes();
-
-        $request  = Request::capture();
-        $response = new Response();
-        $container = Container::getInstance()::$container;
-
         $path = $_SERVER['PATH_INFO'] ?? '/';
         $method = $_SERVER['REQUEST_METHOD'];
 
         foreach (self::$routes as $route) {
             if (self::matchRoute($route, $path, $method, $matches)) {
-                self::handleRoute($route, $matches, $request, $response, $container);
+                self::handleRoute($route, $matches);
                 return;
             }
         }
@@ -90,7 +85,7 @@ class lumenity
                 require $route;
             }
         } else {
-            throw new Exception("Cannot access routes directory: {$routeDir}");
+            throw new Exception("Cannot access routes directory: $routeDir");
         }
     }
 
@@ -116,26 +111,77 @@ class lumenity
      *
      * @param array $route The matched route
      * @param array $matches The matched parameters from the route
-     * @param Request $request The current request instance
-     * @param Response $response The current response instance
-     * @param ioc $container The DI container instance
      * @return void
      * @throws BindingResolutionException
+     * @throws ReflectionException
      */
-    private static function handleRoute(array $route, array $matches, Request $request, Response $response, ioc $container): void
+    private static function handleRoute(array $route, array $matches): void
     {
         foreach ($route['middleware'] as $middleware) {
-            $middlewareInstance = $container->make($middleware);
-            $middlewareInstance->before($request, $response);
+            $middlewareInstance = ioc($middleware);
+            $middlewareInstance->before(ioc('req'), ioc('res'));
         }
 
         array_shift($matches);
 
         if ($route['function'] !== null) {
-            $controllerInstance = $container->make($route['controller']);
-            call_user_func_array([$controllerInstance, $route['function']], [$request, $response, ...$matches]);
+            $controllerInstance = ioc($route['controller']);
+            self::handler([$controllerInstance, $route['function']], $matches);
         } else {
-            call_user_func($route['controller'], $request, $response, ...$matches);
+            self::handler($route['controller'], $matches);
+        }
+    }
+
+    /**
+     * Handles the execution of a route handler.
+     *
+     * This method is responsible for executing the handler of a matched route.
+     * The handler can be either a method of an object or a standalone function/closure.
+     * The method also handles the injection of dependencies into the handler.
+     *
+     * @param callable|array $handler The handler of the route. Can be an array (object and method) or a callable (function/closure).
+     * @param array $matches The matched parameters from the route.
+     * @return void The result of the handler execution.
+     * @throws ReflectionException|BindingResolutionException If the class does not exist, the class does not have the method, or if the function does not exist.
+     */
+    private static function handler(callable|array $handler, array $matches): void
+    {
+        if (is_array($handler)) {
+            // Handler is an array (object and method)
+            list($object, $method) = $handler;
+            $reflection = new ReflectionMethod($object, $method);
+        } else {
+            // Handler is a Closure or function
+            $reflection = new ReflectionFunction($handler);
+        }
+
+        $parameters = $reflection->getParameters();
+        $dependencies = [];
+
+        foreach ($parameters as $parameter) {
+            $paramType = $parameter->getType();
+            $paramName = $parameter->getName();
+            if ($paramType && !$paramType->isBuiltin()) {
+                // If the parameter type is a class, create an instance of it
+                $className = $paramType->getName();
+                $dependencies[] = ioc($className);
+            } elseif ($paramName === 'req' || $paramName === 'request') {
+                // If the parameter name is 'req', pass the request
+                $dependencies[] = ioc('req');
+            } elseif ($paramName === 'res' || $paramName === 'response') {
+                // If the parameter name is 'res', pass the response
+                $dependencies[] = ioc('res');
+            } else {
+                // Otherwise, pass the matched parameters from the route
+                $dependencies[] = array_shift($matches);
+            }
+        }
+
+        // Call method or closure
+        if (isset($object)) {
+            $reflection->invokeArgs($object, $dependencies);
+        } else {
+            $reflection->invokeArgs($dependencies);
         }
     }
 

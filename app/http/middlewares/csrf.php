@@ -3,7 +3,7 @@
 namespace Lumenity\Framework\app\http\middlewares;
 
 use Exception;
-use Illuminate\Http\Request;
+use Lumenity\Framework\config\common\http\Request;
 use Lumenity\Framework\config\common\app\view;
 use Lumenity\Framework\config\common\http\Response;
 use Lumenity\Framework\config\common\interface\Middleware;

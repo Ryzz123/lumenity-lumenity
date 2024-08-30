@@ -15,7 +15,7 @@ use Illuminate\Container\Container;
 abstract class provider implements iprovider
 {
     // Protected property to hold the instance of the Container class
-    protected Container $container;
+    protected static Container $container;
 
     /**
      * Constructor for the provider abstract class.
@@ -27,6 +27,6 @@ abstract class provider implements iprovider
      */
     public function __construct(Container $container)
     {
-        $this->container = $container;
+        self::$container = $container;
     }
 }

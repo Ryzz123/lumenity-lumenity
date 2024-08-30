@@ -14,17 +14,17 @@ use Random\RandomException;
 class generate implements command
 {
     /**
-     * Create a new application.
+     * Create
      *
-     * This method generates a new application key and updates the .env file with the new key.
-     * The application key is a base64 encoded string of 32 random bytes.
+     * This method creates a new middleware in the application.
      *
-     * @param App $app The application instance.
-     * @param string|null $name The name of the application. Currently not used.
-     * @param string|null $config The configuration for the application. Currently not used.
-     * @throws RandomException If the random_bytes function fails.
+     * @param App $app
+     * @param array $args
+     * @param array $option
+     * @return void
+     * @throws RandomException
      */
-    public function create(App $app, ?string $name, ?string $config): void
+    public function create(App $app, array $args, array $option): void
     {
         // Create a new Dotenv instance pointing to the root directory of the application.
         $dotenv = Dotenv::createImmutable(".");

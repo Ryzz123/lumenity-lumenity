@@ -2,7 +2,7 @@
 
 namespace Lumenity\Framework\config\common\interface;
 
-use Illuminate\Http\Request;
+use Lumenity\Framework\config\common\http\Request;
 use Lumenity\Framework\config\common\http\Response;
 
 interface Middleware
