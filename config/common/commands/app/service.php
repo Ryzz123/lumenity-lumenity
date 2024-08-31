@@ -53,7 +53,23 @@ class service implements command
             return;
         }
 
-        $template = <<<EOT
+        if (array_intersect(['-i', '--interface'], $option)) {
+            $interfaceName = "I" . $serviceName;
+            $template = <<<EOT
+        <?php
+
+        namespace $namespace$namespaceDir;
+        
+        use Lumenity\Framework\config\common\utils\service as Service;
+        use Lumenity\Framework\app\interface$namespaceDir\\$interfaceName;
+        
+        class $serviceName extends Service implements $interfaceName
+        {
+            // Add your service methods here
+        }
+        EOT;
+        } else {
+            $template = <<<EOT
         <?php
 
         namespace $namespace$namespaceDir;
@@ -65,6 +81,7 @@ class service implements command
             // Add your service methods here
         }
         EOT;
+        }
 
         file_put_contents($serviceFile, $template);
 

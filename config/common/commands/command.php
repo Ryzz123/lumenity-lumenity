@@ -4,13 +4,13 @@ namespace Lumenity\Framework\config\common\commands;
 
 use Lumenity\Framework\config\common\commands\app\controller;
 use Lumenity\Framework\config\common\commands\app\generate;
+use Lumenity\Framework\config\common\commands\app\interfaces;
 use Lumenity\Framework\config\common\commands\app\middleware;
 use Lumenity\Framework\config\common\commands\app\model;
 use Lumenity\Framework\config\common\commands\app\serve;
 use Lumenity\Framework\config\common\commands\app\service;
 use Lumenity\Framework\config\common\commands\app\tests;
 use Lumenity\Framework\config\common\commands\migrations\create;
-use Lumenity\Framework\config\common\commands\migrations\fresh;
 use Lumenity\Framework\config\common\commands\migrations\migrate;
 use Lumenity\Framework\config\common\commands\migrations\refresh;
 use Lumenity\Framework\config\common\commands\migrations\rollback;
@@ -43,6 +43,7 @@ class command
             'make:middleware {name}' => middleware::class,
             'make:test {name}' => tests::class,
             'make:service {name}' => service::class,
+            'make:interface {name}' => interfaces::class,
             'key:generate' => generate::class,
             'make:migration {name}' => create::class,
             'make:factory {name}' => createseed::class,
