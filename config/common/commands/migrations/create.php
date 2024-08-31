@@ -45,9 +45,20 @@ class create implements command
 
         // Check if a migration with the same name already exists
         $files = glob(__DIR__ . "/../../../../database/migrations/*_" . convertToSnakeCase($name) . ".php");
-        if (!empty($files)) {
-            $app->writeln("Migration already exists.");
-            return;
+        // Check if the migration is an exact match
+        function isExactMatch($filename, $searchName): bool
+        {
+            $fileBasename = basename($filename, '.php');
+            $parts = explode('_', $fileBasename, 2);
+            return isset($parts[1]) && $parts[1] === $searchName;
+        }
+
+        // Check if the migration already exists
+        foreach ($files as $file) {
+            if (isExactMatch($file, convertToSnakeCase($name))) {
+                $app->writeln("Migration already exists.");
+                return;
+            }
         }
 
         // Create a new migration file
@@ -55,6 +66,12 @@ class create implements command
 
         // Get the newly created migration file
         $files = glob(__DIR__ . "/../../../../database/migrations/*_" . convertToSnakeCase($name) . ".php");
+        foreach ($files as $file) {
+            if (isExactMatch($file, convertToSnakeCase($name))) {
+                $files = [$file];
+                break;
+            }
+        }
 
         // Get the table name from the migration name
         $table = convertToSnakeCase($name);
@@ -87,7 +104,7 @@ class create implements command
         EOT;
 
         // Write the template to the migration file
-        file_put_contents($files[0], $template);
+        file_put_contents(end($files), $template);
 
         // Notify the user that the migration was created successfully
         $app->writeln("Migration created successfully.");
