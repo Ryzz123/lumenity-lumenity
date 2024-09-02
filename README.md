@@ -1,6 +1,5 @@
 <p align="center">
-    <img src="https://i.ibb.co.com/rtjLyY9/favicon.png" width="100" alt="Laravel Logo"
-    >
+    <img src="https://raw.githubusercontent.com/ryzz123/art/main/20240902_234414.png" width="400" alt="Lumenity Logo">
 </p>
 
 <p align="center">
