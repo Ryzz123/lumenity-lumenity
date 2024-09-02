@@ -5,7 +5,7 @@ namespace Lumenity\Framework\app\http\middlewares;
 use Lumenity\Framework\config\common\http\Request;
 use Lumenity\Framework\config\common\app\cors as CorsConfig;
 use Lumenity\Framework\config\common\http\Response;
-use Lumenity\Framework\config\common\interface\Middleware;
+use Lumenity\Framework\config\common\interface\middleware;
 
 /**
  * CORS Middleware
@@ -13,7 +13,7 @@ use Lumenity\Framework\config\common\interface\Middleware;
  * This middleware class handles Cross-Origin Resource Sharing (CORS) for incoming requests.
  * It sets the appropriate CORS headers based on the configuration defined in the CorsConfig class.
  */
-class cors implements Middleware
+class cors implements middleware
 {
     /**
      * Handle Before Request

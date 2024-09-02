@@ -4,7 +4,7 @@ namespace Lumenity\Framework\app\http\middlewares;
 
 use Lumenity\Framework\config\common\http\Request;
 use Lumenity\Framework\config\common\http\Response;
-use Lumenity\Framework\config\common\interface\Middleware;
+use Lumenity\Framework\config\common\interface\middleware;
 
 /**
  * JSON Middleware
@@ -12,7 +12,7 @@ use Lumenity\Framework\config\common\interface\Middleware;
  * This middleware class handles setting the response content type to JSON.
  * It ensures that the response returned by the application is in JSON format.
  */
-class json implements Middleware
+class json implements middleware
 {
     /**
      * Set Response Content Type to JSON

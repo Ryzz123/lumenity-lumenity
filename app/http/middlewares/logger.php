@@ -4,7 +4,7 @@ namespace Lumenity\Framework\app\http\middlewares;
 use Lumenity\Framework\config\common\http\Request;
 use Lumenity\Framework\config\common\app\log as Log;
 use Lumenity\Framework\config\common\http\Response;
-use Lumenity\Framework\config\common\interface\Middleware;
+use Lumenity\Framework\config\common\interface\middleware;
 
 /**
 * Logger Middleware
@@ -12,7 +12,7 @@ use Lumenity\Framework\config\common\interface\Middleware;
  * This middleware class handles logging incoming requests.
  * It logs details such as request method, request URI, client IP, and timestamp.
  */
-class logger implements Middleware
+class logger implements middleware
 {
     /**
      * Log Incoming Request

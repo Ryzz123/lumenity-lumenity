@@ -1,36 +1,49 @@
+<p align="center">
+    <img src="https://i.ibb.co.com/rtjLyY9/favicon.png" width="100" alt="Laravel Logo"
+    >
+</p>
 
-Lumenity Framework is a PHP framework that is designed to be simple, fast, and easy to use. It is designed to be a lightweight
-framework that can be used to build web applications quickly and easily. It is designed to be flexible and extensible, so you can
-easily add new features and functionality to your web applications.
+<p align="center">
+    <a href="https://packagist.org/packages/lumenity/framework"><img src="https://img.shields.io/packagist/dt/lumenity/framework" alt="Total Downloads"></a>
+    <a href="https://packagist.org/packages/lumenity/framework"><img src="https://img.shields.io/packagist/v/lumenity/framework" alt="Latest Stable Version"></a>
+    <a href="https://packagist.org/packages/lumenity/framework"><img src="https://img.shields.io/packagist/l/lumenity/framework" alt="License"></a>
+</p>
 
-### Requirements
+Lumenity Framework adalah framework PHP yang dirancang sederhana, cepat, dan mudah digunakan. Ini dirancang untuk
+menjadi kerangka kerja ringan yang dapat digunakan untuk membangun aplikasi web dengan cepat dan mudah. Ini dirancang
+agar fleksibel dan dapat diperluas, sehingga Anda dapat dengan mudah menambahkan fitur dan fungsionalitas baru ke
+aplikasi web Anda.
 
-- PHP ^8.2 or higher
+### Kebutuhan
+
+- PHP ^8.2 atau lebih tinggi
 - Composer
-- Apache or Nginx
+- Apache atau Nginx
+- MySQL atau MariaDB
+- Node.js dan NPM 
+- Git
 
-### Installation
+### Pemasangan
 
-To install Lumenity Framework, you need to have PHP ^8.2 or higher installed on your system. You also need to have Composer installed
-on your system. You can install Composer by following the instructions on the Composer website.
-
-Once you have Composer installed, you can install Lumenity Framework by running the following command in your terminal:
+Untuk menginstal Lumenity Framework, Anda harus menginstal PHP ^8.2 atau lebih tinggi di sistem Anda. Anda juga perlu
+menginstal Komposer di sistem Anda. Anda dapat menginstal Composer dengan mengikuti petunjuk di situs Composer. Setelah
+Anda menginstal Composer, Anda dapat menginstal Lumenity Framework dengan menjalankan perintah berikut di terminal Anda
 
 ```bash
 composer create-project lumenity/framework
 ```
 
-This will create a new directory called `Lumenity` in your current working directory and install Lumenity Framework in that directory.
+Ini akan membuat direktori baru bernama `framework` di direktori kerja Anda saat ini dan menginstal Lumenity Framework di
+direktori tersebut.
 
-### Configuration
+### Konfigurasi
 
-Once you have installed Lumenity Framework, you need to configure it to work with your web server and database. You can do this by
-editing the `.env` file in the `app` directory. You can configure the database connection settings, the base URL of your
-web application, and other settings in this file.
-
+Setelah Anda menginstal Lumenity Framework, Anda perlu mengonfigurasinya agar berfungsi dengan server web dan database
+Anda. Anda dapat melakukan ini dengan mengedit file `.env` di direktori `app`. Anda dapat mengonfigurasi pengaturan
+koneksi database, URL dasar aplikasi web Anda, dan pengaturan lainnya dalam file ini.
 
 ```bash
 php artisan serve
 ```
 
-This will start a web server on `http://127.0.0.1:3000` that serves your web application.
+Ini akan memulai server web di `http:127.0.0.1:3000` yang melayani aplikasi web Anda.

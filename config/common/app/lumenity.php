@@ -117,9 +117,11 @@ class lumenity
      */
     private static function handleRoute(array $route, array $matches): void
     {
+        $req = ioc('req');
+        $res = ioc('res');
         foreach ($route['middleware'] as $middleware) {
             $middlewareInstance = ioc($middleware);
-            $middlewareInstance->before(ioc('req'), ioc('res'));
+            $middlewareInstance->before($req, $res);
         }
 
         array_shift($matches);

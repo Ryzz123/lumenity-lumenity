@@ -31,9 +31,7 @@ class HttpProvider extends provider
         });
 
         // Bind the response object to the container
-        self::$container->bind('res', function () {
-            return new Response();
-        });
+        self::$container->bind('res', Response::class);
     }
 
     /**

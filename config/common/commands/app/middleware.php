@@ -62,9 +62,9 @@ class middleware implements command
         
         use Lumenity\Framework\config\common\http\Request;
         use Lumenity\Framework\config\common\http\Response;
-        use Lumenity\Framework\config\common\interface\Middleware;
+        use Lumenity\Framework\config\common\interface\middleware;
         
-        class $middleware implements Middleware
+        class $middleware implements middleware
         {
             public function before(Request \$req, Response \$res): void
             {

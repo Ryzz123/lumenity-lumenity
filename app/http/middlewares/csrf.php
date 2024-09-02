@@ -6,7 +6,7 @@ use Exception;
 use Lumenity\Framework\config\common\http\Request;
 use Lumenity\Framework\config\common\app\view;
 use Lumenity\Framework\config\common\http\Response;
-use Lumenity\Framework\config\common\interface\Middleware;
+use Lumenity\Framework\config\common\interface\middleware;
 
 /**
  * CSRF Middleware
@@ -14,7 +14,7 @@ use Lumenity\Framework\config\common\interface\Middleware;
  * This middleware class handles Cross-Site Request Forgery (CSRF) protection.
  * It verifies the validity of CSRF tokens in incoming requests.
  */
-class csrf implements Middleware
+class csrf implements middleware
 {
     /**
      * Handle Incoming Request
