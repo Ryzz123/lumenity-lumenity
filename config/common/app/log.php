@@ -27,6 +27,7 @@ class log
     private static function getLogger(): Logger
     {
         if (!isset(self::$logger)) {
+            date_default_timezone_set('Asia/Jakarta');
             $logFile = __DIR__ . '/../../../storage/log/application.log';
             $rotatingHandler = new RotatingFileHandler($logFile, 30, Logger::DEBUG);
             $rotatingHandler->setFilenameFormat('{filename}-{date}', 'Y-m-d');

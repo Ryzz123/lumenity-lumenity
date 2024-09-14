@@ -6,6 +6,7 @@ use eftec\bladeone\BladeOne;
 use Exception;
 use JetBrains\PhpStorm\NoReturn;
 use Lumenity\Framework\config\common\blade\vite;
+use Lumenity\Framework\config\common\blade\asset;
 
 /**
  * View Configuration
@@ -82,6 +83,12 @@ class view
             return ioc($name);
         });
 
+        // Add the 'asset' runtime function to the Blade instance
+        foreach (asset::capture() as $key => $value) {
+           $blade->addAssetDict($key, $value);
+        }
+
+        // Add the 'vite' runtime function to the Blade instance
         $blade->addMethod('runtime', 'vite', function ($entrypoints) {
             return vite::capture($entrypoints);
         });
