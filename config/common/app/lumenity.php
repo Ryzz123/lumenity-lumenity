@@ -5,6 +5,8 @@ namespace Lumenity\Framework\config\common\app;
 use Exception;
 use Illuminate\Contracts\Container\BindingResolutionException;
 use JetBrains\PhpStorm\NoReturn;
+use Lumenity\Framework\config\common\http\Request;
+use Lumenity\Framework\config\common\http\Response;
 use ReflectionException;
 use ReflectionFunction;
 use ReflectionMethod;
@@ -128,9 +130,9 @@ class lumenity
 
         if ($route['function'] !== null) {
             $controllerInstance = ioc($route['controller']);
-            self::handler([$controllerInstance, $route['function']], $matches);
+            self::handler([$controllerInstance, $route['function']], $matches, $req, $res);
         } else {
-            self::handler($route['controller'], $matches);
+            self::handler($route['controller'], $matches, $req, $res);
         }
     }
 
@@ -143,10 +145,12 @@ class lumenity
      *
      * @param callable|array $handler The handler of the route. Can be an array (object and method) or a callable (function/closure).
      * @param array $matches The matched parameters from the route.
+     * @param Request $request The current request object.
+     * @param Response $response The current response object.
      * @return void The result of the handler execution.
      * @throws ReflectionException|BindingResolutionException If the class does not exist, the class does not have the method, or if the function does not exist.
      */
-    private static function handler(callable|array $handler, array $matches): void
+    private static function handler(callable|array $handler, array $matches, Request $request, Response $response): void
     {
         if (is_array($handler)) {
             // Handler is an array (object and method)
@@ -169,10 +173,10 @@ class lumenity
                 $dependencies[] = ioc($className);
             } elseif ($paramName === 'req' || $paramName === 'request') {
                 // If the parameter name is 'req', pass the request
-                $dependencies[] = ioc('req');
+                $dependencies[] = $request;
             } elseif ($paramName === 'res' || $paramName === 'response') {
                 // If the parameter name is 'res', pass the response
-                $dependencies[] = ioc('res');
+                $dependencies[] = $response;
             } else {
                 // Otherwise, pass the matched parameters from the route
                 $dependencies[] = array_shift($matches);
