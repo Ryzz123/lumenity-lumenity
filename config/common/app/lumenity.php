@@ -170,7 +170,13 @@ class lumenity
             if ($paramType && !$paramType->isBuiltin()) {
                 // If the parameter type is a class, create an instance of it
                 $className = $paramType->getName();
-                $dependencies[] = ioc($className);
+                if ($className === Request::class) {
+                    $dependencies[] = $request;
+                } elseif ($className === Response::class) {
+                    $dependencies[] = $response;
+                } else {
+                    $dependencies[] = ioc($className);
+                }
             } elseif ($paramName === 'req' || $paramName === 'request') {
                 // If the parameter name is 'req', pass the request
                 $dependencies[] = $request;
