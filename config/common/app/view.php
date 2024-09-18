@@ -68,9 +68,9 @@ class view
          */
         $blade = self::getInstance()->blade;
 
-        // Render the view template and output the result
-        // Enable including the scope in the view templates
-        $blade->getCsrfToken(); // it's a way to generate the csrf token (if it's not generated yet)
+        // it's a way to generate the csrf token (if it's not generated yet)
+        $token = $blade->getCsrfToken(true);
+        $_SESSION['_token'] = $token;
 
         // Enable including the scope in the view templates
         $blade->includeScope = true;

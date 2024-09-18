@@ -32,7 +32,7 @@ class MiddlewaresProvider extends provider
         ];
 
         foreach ($middlewares as $key => $value) {
-            self::$container->bind($key, $value);
+            self::$container->bind("make:$key", $value);
         }
     }
 

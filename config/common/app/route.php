@@ -107,11 +107,11 @@ class route
      *
      * @param string $path The URL path pattern for the route
      * @param callable|string $handler The name of the controller class handling the route
-     * @param string $method
+     * @param string|null $method
      * @param array $middleware An array of middleware classes to be executed before handling the route
      * @return void
      */
-    public static function post(string $path, callable|string $handler, string $method, array $middleware = []): void
+    public static function post(string $path, callable|string $handler, ?string $method, array $middleware = []): void
     {
         $route = self::getInstance();
 
@@ -131,11 +131,11 @@ class route
      *
      * @param string $path The URL path pattern for the route
      * @param callable|string $handler The name of the controller class handling the route
-     * @param string $method
+     * @param string|null $method
      * @param array $middleware An array of middleware classes to be executed before handling the route
      * @return void
      */
-    public static function put(string $path, callable|string $handler, string $method, array $middleware = []): void
+    public static function put(string $path, callable|string $handler, ?string $method, array $middleware = []): void
     {
         $route = self::getInstance();
 
@@ -155,11 +155,11 @@ class route
      *
      * @param string $path The URL path pattern for the route
      * @param callable|string $handler The name of the controller class handling the route
-     * @param string $method
+     * @param string|null $method
      * @param array $middleware An array of middleware classes to be executed before handling the route
      * @return void
      */
-    public static function delete(string $path, callable|string $handler, string $method, array $middleware = []): void
+    public static function delete(string $path, callable|string $handler, ?string $method, array $middleware = []): void
     {
         $route = self::getInstance();
 
@@ -179,11 +179,11 @@ class route
      *
      * @param string $path The URL path pattern for the route
      * @param callable|string $handler The name of the controller class handling the route
-     * @param string $method
+     * @param string|null $method
      * @param array $middleware An array of middleware classes to be executed before handling the route
      * @return void
      */
-    public static function patch(string $path, callable|string $handler, string $method, array $middleware = []): void
+    public static function patch(string $path, callable|string $handler, ?string $method, array $middleware = []): void
     {
         $route = self::getInstance();
 
