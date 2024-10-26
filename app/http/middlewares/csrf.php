@@ -4,7 +4,6 @@ namespace Lumenity\Framework\app\http\middlewares;
 
 use Exception;
 use Lumenity\Framework\config\common\http\Request;
-use Lumenity\Framework\config\common\app\view;
 use Lumenity\Framework\config\common\http\Response;
 use Lumenity\Framework\config\common\interface\middleware;
 
@@ -33,13 +32,13 @@ class csrf implements middleware
          * Get Blade Instance
          * This is used to validate the CSRF token.
          */
-        $blade = view::getInstance()->blade;
+        $token = $_COOKIE['XSRF-TOKEN'] ?? null;
 
         /**
          * Validate CSRF Token
          * If the CSRF token is missing or invalid, render an error view.
          */
-        if (!$req->input('_token') || $blade->csrfIsValid() !== true) {
+        if (!$req->input('_token') || $req->input('_token') !== $token) {
             // If CSRF token is missing or invalid, render an error view
             $res->headers->set('Content-Type', 'application/json');
             $parsed_url = parse_url($req->url());

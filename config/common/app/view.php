@@ -32,7 +32,6 @@ class view
      */
     private function __construct()
     {
-        session_start();
         $this->blade = new BladeOne(self::$viewsPath, self::$cachePath, BladeOne::MODE_AUTO);
     }
 
@@ -70,7 +69,10 @@ class view
 
         // it's a way to generate the csrf token (if it's not generated yet)
         $token = $blade->getCsrfToken(true);
-        $_SESSION['_token'] = $token;
+
+        // Set the CSRF token in a cookie with a 1-year expiration
+        setcookie('XSRF-TOKEN', $token, time() + 60 * 60 * 24 * 365, '/');
+        $blade->csrf_token = $token;
 
         // Enable including the scope in the view templates
         $blade->includeScope = true;
