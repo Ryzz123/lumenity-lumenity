@@ -51,12 +51,12 @@ class connection
             $this->capsule = new Manager;
 
             $this->capsule->addConnection([
-                'driver' => $_ENV['DB_CONNECTION'] ?? 'mysql',
-                'host' => $_ENV['DB_HOST'] ?? 'localhost',
-                'port' => $_ENV['DB_PORT'] ?? '3306',
-                'database' => $_ENV['DB_DATABASE'] ?? 'Lumenity',
-                'username' => $_ENV['DB_USERNAME'] ?? 'root',
-                'password' => $_ENV['DB_PASSWORD'] ?? '',
+                'driver' => config('database.connection') ?? 'mysql',
+                'host' => config('database.host') ?? 'localhost',
+                'port' => config('database.port') ?? '3306',
+                'database' => config('database.database') ?? 'Lumenity',
+                'username' => config('database.username') ?? 'root',
+                'password' => config('database.password') ?? '',
                 'charset' => 'utf8',
                 'collation' => 'utf8_unicode_ci',
                 'prefix' => '',

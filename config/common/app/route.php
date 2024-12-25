@@ -111,7 +111,7 @@ class route
      * @param array $middleware An array of middleware classes to be executed before handling the route
      * @return void
      */
-    public static function post(string $path, callable|string $handler, ?string $method, array $middleware = []): void
+    public static function post(string $path, callable|string $handler, ?string $method = null, array $middleware = []): void
     {
         $route = self::getInstance();
 
@@ -135,7 +135,7 @@ class route
      * @param array $middleware An array of middleware classes to be executed before handling the route
      * @return void
      */
-    public static function put(string $path, callable|string $handler, ?string $method, array $middleware = []): void
+    public static function put(string $path, callable|string $handler, ?string $method = null, array $middleware = []): void
     {
         $route = self::getInstance();
 
@@ -159,7 +159,7 @@ class route
      * @param array $middleware An array of middleware classes to be executed before handling the route
      * @return void
      */
-    public static function delete(string $path, callable|string $handler, ?string $method, array $middleware = []): void
+    public static function delete(string $path, callable|string $handler, ?string $method = null, array $middleware = []): void
     {
         $route = self::getInstance();
 
@@ -183,7 +183,7 @@ class route
      * @param array $middleware An array of middleware classes to be executed before handling the route
      * @return void
      */
-    public static function patch(string $path, callable|string $handler, ?string $method, array $middleware = []): void
+    public static function patch(string $path, callable|string $handler, ?string $method = null, array $middleware = []): void
     {
         $route = self::getInstance();
 

@@ -69,16 +69,23 @@ class view
 
         // it's a way to generate the csrf token (if it's not generated yet)
         $token = $blade->getCsrfToken(true);
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
 
-        // Set the CSRF token in a cookie with a 1-year expiration
-        setcookie('XSRF-TOKEN', $token, time() + 60 * 60 * 24 * 365, '/');
-        $blade->csrf_token = $token;
+        if (!isset($_SESSION['csrf_token'])) {
+            $_SESSION['csrf_token'] = $token;
+        }
+
+        // Set the CSRF token in the Blade instance
+        $blade->csrf_token = $_SESSION['csrf_token'];
+        setcookie('XSRF-TOKEN', $blade->csrf_token, time() + 60 * 60 * 24 * 365, '/');
 
         // Enable including the scope in the view templates
         $blade->includeScope = true;
 
         // Set the compiled flag based on the application environment
-        $blade->setIsCompiled($_ENV['APP_DEBUG'] === 'false');
+        $blade->setIsCompiled(config('app.debug') === 'false');
 
         // Set the inject resolver to resolve dependencies from the container
         $blade->setInjectResolver(function ($name) {

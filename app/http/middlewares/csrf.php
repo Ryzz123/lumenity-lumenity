@@ -42,8 +42,12 @@ class csrf implements middleware
             // If CSRF token is missing or invalid, render an error view
             $res->headers->set('Content-Type', 'application/json');
             $parsed_url = parse_url($req->url());
-            $base_url = $parsed_url['scheme'] . '://' . $parsed_url['host'] . ':' . $parsed_url['port'] . '/';
-            if ($base_url == $_ENV['APP_URL']) {
+            $base_url = $parsed_url['scheme'] . '://' . $parsed_url['host'];
+            if (!empty($parsed_url['port']) && $parsed_url['port'] != 80 && $parsed_url['port'] != 443) {
+                $base_url .= ':' . $parsed_url['port'];
+            }
+            $base_url .= '/';
+            if ($base_url == config('app.url')) {
                 view('error', [
                     'title' => '500 | ERROR 500',
                     'code' => '500',

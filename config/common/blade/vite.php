@@ -25,7 +25,7 @@ class vite
             $extension = pathinfo($entrypoints[0], PATHINFO_EXTENSION);
             // If the 'APP_DEBUG' environment variable is set to 'true', the application is in development mode.
             // In this case, the assets are served from the Vite development server.
-            if ($_ENV['APP_DEBUG'] === 'true') {
+            if (config('app.debug') === 'true') {
                 // Sanitize the Vite development server URL and the entrypoint to prevent XSS attacks.
                 $safeViteUrl = htmlspecialchars($viteUrl, ENT_QUOTES, 'UTF-8');
                 $safeEntryPoint = htmlspecialchars($entrypoints[0], ENT_QUOTES, 'UTF-8');
@@ -73,7 +73,7 @@ class vite
 
             // If the 'APP_DEBUG' environment variable is set to 'true', the application is in development mode.
             // In this case, the assets are served from the Vite development server.
-            if ($_ENV['APP_DEBUG'] === 'true') {
+            if (config('app.debug') === 'true') {
                 // Sanitize the Vite development server URL and the entrypoint to prevent XSS attacks.
                 $safeViteUrl = htmlspecialchars($viteUrl, ENT_QUOTES, 'UTF-8');
                 $safeEntryPoint = htmlspecialchars($entrypoint, ENT_QUOTES, 'UTF-8');

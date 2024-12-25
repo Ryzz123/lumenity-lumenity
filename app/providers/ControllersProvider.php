@@ -7,12 +7,12 @@ namespace Lumenity\Framework\app\providers;
 use Lumenity\Framework\config\common\interface\provider;
 
 /**
- * Class MiddlewareProvider
+ * Class ControllersProvider
  *
  * This class extends the provider abstract class and implements the register method.
  * It is used as a service provider in the application.
  */
-class MiddlewaresProvider extends provider
+class ControllersProvider extends provider
 {
     /**
      * Method register
@@ -24,21 +24,21 @@ class MiddlewaresProvider extends provider
     public function register(): void
     {
         // Bind the response object to the container
-        $middlewares = [];
-        $middlewarePath = __DIR__ . '/../http/middlewares';
-        $middlewareFiles = scandir($middlewarePath);
-        foreach ($middlewareFiles as $file) {
+        $controllers = [];
+        $controllerPath = __DIR__ . '/../http/controllers';
+        $controllerFiles = scandir($controllerPath);
+        foreach ($controllerFiles as $file) {
             if ($file === '.' || $file === '..') {
                 continue;
             }
 
-            $middlewareName = str_replace('.php', '', $file);
-            $middlewareClass = 'Lumenity\\Framework\\app\\http\\middlewares\\' . $middlewareName;
-            $middlewares[$middlewareName] = $middlewareClass;
+            $controllerName = str_replace('.php', '', $file);
+            $controllerClass = 'Lumenity\\Framework\\app\\http\\controllers\\' . $controllerName;
+            $controllers[$controllerName] = $controllerClass;
         }
 
-        foreach ($middlewares as $key => $value) {
-            self::$container->bind("@$key", $value);
+        foreach ($controllers as $key => $value) {
+            self::$container->bind('@' . $key, $value);
         }
     }
 

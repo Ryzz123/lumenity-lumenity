@@ -38,12 +38,12 @@ class whoops
             $handler->addCustomCss('/root/whoops.custom.css');
             // Add custom data table for framework information
             $handler->addDataTable('Lumenity Framework', [
-                'Version' => '5.7.0'
+                'Version' => '6.0.0'
             ]);
         });
 
         // Push the configured handler to the Whoops stack
-        if ($_ENV['APP_DEBUG'] === 'true') {
+        if (config('app.debug') === 'true') {
             $whoops->pushHandler($handler);
         } else {
             $whoops->pushHandler(function ($exception) {

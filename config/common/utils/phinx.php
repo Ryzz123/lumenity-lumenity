@@ -44,17 +44,17 @@ class phinx
                 // Define the default environment configurations
                 'default' => [
                     // Define the database adapter, default is 'mysql'
-                    'adapter' => $_ENV['DB_CONNECTION'] ?? 'mysql',
+                    'adapter' => config('database.connection') ?? 'mysql',
                     // Define the host for the database, default is 'localhost'
-                    'host' => $_ENV['DB_HOST'] ?? 'localhost',
+                    'host' => config('database.host') ?? 'localhost',
                     // Define the name of the database, default is 'Lumenity'
-                    'name' => $_ENV['DB_DATABASE'] ?? 'Lumenity',
+                    'name' => config('database.database') ?? 'Lumenity',
                     // Define the username for the database, default is 'root'
-                    'user' => $_ENV['DB_USERNAME'] ?? 'root',
+                    'user' => config('database.username') ?? 'root',
                     // Define the password for the database, default is an empty string
-                    'pass' => $_ENV['DB_PASSWORD'] ?? '',
+                    'pass' => config('database.password') ?? '',
                     // Define the port for the database, default is '3306'
-                    'port' => $_ENV['DB_PORT'] ?? '3306',
+                    'port' => config('database.port') ?? '3306',
                 ],
             ],
         ];

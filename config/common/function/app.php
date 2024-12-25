@@ -45,6 +45,50 @@ if (!function_exists('view')) {
     }
 }
 
+// Check if the function 'config' already exists
+if (!function_exists('config')) {
+    /**
+     * Get the value of a configuration setting.
+     *
+     * This function retrieves the value of a configuration setting from the loaded configuration array.
+     *
+     * @param string $key The key of the configuration setting, in dot notation (e.g., 'app.version').
+     *
+     * @return mixed|null The value of the configuration setting, or null if the key does not exist.
+     * @throws RuntimeException If the configuration file cannot be loaded.
+     */
+    function config(string $key): mixed
+    {
+        static $config_file = null;
+
+        if ($config_file === null) {
+            $config_path = __DIR__ . '/../../../bootstrap/config.php';
+
+            if (!file_exists($config_path)) {
+                throw new RuntimeException("Configuration file not found: $config_path");
+            }
+
+            $config_file = require_once $config_path;
+
+            if (!is_array($config_file)) {
+                throw new RuntimeException("Invalid configuration file format. Expected an associative array.");
+            }
+        }
+
+        $keys = explode('.', $key);
+        $value = $config_file;
+
+        foreach ($keys as $segment) {
+            if (!is_array($value) || !array_key_exists($segment, $value)) {
+                return null; // Return null if the key does not exist
+            }
+            $value = $value[$segment];
+        }
+
+        return $value;
+    }
+}
+
 // Check if the function 'redirect' already exists
 if (!function_exists('redirect')) {
     /**

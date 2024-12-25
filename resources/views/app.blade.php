@@ -134,7 +134,7 @@
             </main>
 
             <footer class="py-16 text-center text-xs lg:text-sm text-black dark:text-white/70">
-                Lumenity v5.5.3 (PHP v{{ PHP_VERSION }})
+                Lumenity v6.0.0 (PHP v{{ PHP_VERSION }})
             </footer>
         </div>
     </div>

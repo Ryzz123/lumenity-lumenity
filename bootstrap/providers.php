@@ -12,6 +12,7 @@
  * @return array An array of fully qualified class names of the service providers
  */
 return [
+    \Lumenity\Framework\app\providers\ControllersProvider::class,
     \Lumenity\Framework\app\providers\ServiceProvider::class,
     \Lumenity\Framework\app\providers\HttpProvider::class,
     \Lumenity\Framework\app\providers\MiddlewaresProvider::class,
