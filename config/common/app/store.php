@@ -49,7 +49,7 @@ class store
      * Delete File
      * Deletes the specified file from the filesystem.
      */
-    public static function delete(string $path, string $fileName): bool
+    public static function drop(string $path, string $fileName): bool
     {
         try {
             $filePath = $path . '/' . $fileName;

@@ -46,11 +46,12 @@ class log
      *
      * @param int $level The log level (100 - DEBUG, 200 - INFO, 250 - NOTICE, 300 - WARNING, 400 - ERROR, 500 - CRITICAL, 550 - ALERT, 600 - EMERGENCY)
      * @param string $message The message to be logged
+     * @param array $context
      * @return void
      */
-    private static function logMessage(int $level, string $message): void
+    private static function logMessage(int $level, string $message, array $context = []): void
     {
-        self::getLogger()->log($level, $message);
+        self::getLogger()->log($level, $message, $context);
     }
 
     // Define methods for logging messages with various log levels
@@ -61,11 +62,12 @@ class log
      * Logs a warning message.
      *
      * @param string $message The warning message to be logged
+     * @param array $context
      * @return void
      */
-    public static function warning(string $message): void
+    public static function warning(string $message, array $context = []): void
     {
-        self::logMessage(300, $message);
+        self::logMessage(300, $message, $context);
     }
 
     /**
@@ -74,11 +76,12 @@ class log
      * Logs an informational message.
      *
      * @param string $message The informational message to be logged
+     * @param array $context
      * @return void
      */
-    public static function info(string $message): void
+    public static function info(string $message, array $context = []): void
     {
-        self::logMessage(200, $message);
+        self::logMessage(200, $message, $context);
     }
 
     /**
@@ -87,11 +90,12 @@ class log
      * Logs an error message.
      *
      * @param string $message The error message to be logged
+     * @param array $context
      * @return void
      */
-    public static function error(string $message): void
+    public static function error(string $message, array $context = []): void
     {
-        self::logMessage(400, $message);
+        self::logMessage(400, $message, $context);
     }
 
     /**
@@ -100,11 +104,12 @@ class log
      * Logs a debug message.
      *
      * @param string $message The debug message to be logged
+     * @param array $context
      * @return void
      */
-    public static function debug(string $message): void
+    public static function debug(string $message, array $context = []): void
     {
-        self::logMessage(100, $message);
+        self::logMessage(100, $message, $context);
     }
 
     /**
@@ -113,11 +118,12 @@ class log
      * Logs a critical message.
      *
      * @param string $message The critical message to be logged
+     * @param array $context
      * @return void
      */
-    public static function critical(string $message): void
+    public static function critical(string $message, array $context = []): void
     {
-        self::logMessage(500, $message);
+        self::logMessage(500, $message, $context);
     }
 
     /**
@@ -126,11 +132,12 @@ class log
      * Logs an alert message.
      *
      * @param string $message The alert message to be logged
+     * @param array $context
      * @return void
      */
-    public static function alert(string $message): void
+    public static function alert(string $message, array $context = []): void
     {
-        self::logMessage(550, $message);
+        self::logMessage(550, $message, $context);
     }
 
     /**
@@ -139,11 +146,12 @@ class log
      * Logs an emergency message.
      *
      * @param string $message The emergency message to be logged
+     * @param array $context
      * @return void
      */
-    public static function emergency(string $message): void
+    public static function emergency(string $message, array $context = []): void
     {
-        self::logMessage(600, $message);
+        self::logMessage(600, $message, $context);
     }
 
     /**
@@ -152,10 +160,11 @@ class log
      * Logs a notice message.
      *
      * @param string $message The notice message to be logged
+     * @param array $context
      * @return void
      */
-    public static function notice(string $message): void
+    public static function notice(string $message, array $context = []): void
     {
-        self::logMessage(250, $message);
+        self::logMessage(250, $message, $context);
     }
 }

@@ -47,6 +47,12 @@ class csrf implements middleware
                 $base_url .= ':' . $parsed_url['port'];
             }
             $base_url .= '/';
+            logger('Invalid CSRF token', 'error', [
+                'url' => $req->url(),
+                'method' => $req->method(),
+                'token' => $req->input('_token'),
+                'cookie_token' => $token,
+            ]);
             if ($base_url == config('app.url')) {
                 view('error', [
                     'title' => '500 | ERROR 500',

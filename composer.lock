@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "b510f68f323840be6c11f45a604ef5fe",
+    "content-hash": "1338e23be706fd854eb23e8cf0c8689b",
     "packages": [
         {
             "name": "brick/math",
@@ -2216,43 +2216,6 @@
                 "source": "https://github.com/php-fig/simple-cache/tree/3.0.0"
             },
             "time": "2021-10-29T13:26:27+00:00"
-        },
-        {
-            "name": "rakit/console",
-            "version": "v0.1.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/rakit/console.git",
-                "reference": "b13ba2639d10f1234438b571026a1827fb46b7a2"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/rakit/console/zipball/b13ba2639d10f1234438b571026a1827fb46b7a2",
-                "reference": "b13ba2639d10f1234438b571026a1827fb46b7a2",
-                "shasum": ""
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Rakit\\Console\\": "src"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Muhammad Syifa",
-                    "email": "emsifa@gmail.com"
-                }
-            ],
-            "description": "PHP Simple Library to Create Command Line Interface Application",
-            "support": {
-                "issues": "https://github.com/rakit/console/issues",
-                "source": "https://github.com/rakit/console/tree/master"
-            },
-            "time": "2018-03-09T14:21:21+00:00"
         },
         {
             "name": "ralouphie/getallheaders",
@@ -5351,6 +5314,43 @@
                 }
             ],
             "time": "2022-10-28T06:00:21+00:00"
+        },
+        {
+            "name": "rakit/console",
+            "version": "v0.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rakit/console.git",
+                "reference": "b13ba2639d10f1234438b571026a1827fb46b7a2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rakit/console/zipball/b13ba2639d10f1234438b571026a1827fb46b7a2",
+                "reference": "b13ba2639d10f1234438b571026a1827fb46b7a2",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Rakit\\Console\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Muhammad Syifa",
+                    "email": "emsifa@gmail.com"
+                }
+            ],
+            "description": "PHP Simple Library to Create Command Line Interface Application",
+            "support": {
+                "issues": "https://github.com/rakit/console/issues",
+                "source": "https://github.com/rakit/console/tree/master"
+            },
+            "time": "2018-03-09T14:21:21+00:00"
         },
         {
             "name": "robmorgan/phinx",

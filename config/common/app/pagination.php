@@ -2,6 +2,8 @@
 
 namespace Lumenity\Framework\config\common\app;
 
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Collection;
 
 /**
@@ -12,134 +14,80 @@ use Illuminate\Support\Collection;
  */
 class pagination
 {
-    private array $data;
+    private Model|Builder $query;
     private int $page;
     private int $limit;
-    private int $total;
+
+    public function __construct(int $limit, int $page, Model|Builder $query)
+    {
+        $this->limit = $limit;
+        $this->page = $page;
+        $this->query = $query;
+    }
 
     /**
-     * Constructor
+     * Create Collection
      *
-     * Initializes the pagination object with the provided data array.
+     * Creates a new collection instance from the given data.
      *
-     * @param array $data The array of data to be paginated
+     * @param array $data The data to be converted into a collection
+     * @return Collection The collection instance containing the data
      */
-    public function __construct(array $data)
+    public static function collection(array $data): Collection
     {
-        $this->data = $data;
-        $this->total = count($data);
-        $this->page = 1;
-        $this->limit = 10; // Default limit is 10 items per page
+        return new Collection($data);
     }
 
     /**
      * Set Limit
      *
-     * Sets the limit of items per page.
+     * Sets the limit for pagination.
      *
-     * @param int $limit The limit of items per page
-     * @return Pagination The Pagination object for method chaining
+     * @return Collection
      */
-    public function limit(int $limit): self
+    public function paginate(): Collection
     {
-        $this->limit = $limit;
-        return $this;
-    }
-
-    /**
-     * Set Page
-     *
-     * Sets the current page.
-     *
-     * @param int $page The current page
-     * @return Pagination The Pagination object for method chaining
-     */
-    public function page(int $page): self
-    {
-        $this->page = $page;
-        return $this;
-    }
-
-    /**
-     * Paginate Data
-     *
-     * Paginates the data array based on the current page and limit.
-     *
-     * @return paginationresult An Pagination Class containing the paginated data and pagination information
-     */
-    public function paginate(): paginationresult
-    {
-        $totalPages = ceil($this->total / $this->limit);
-        $offset = ($this->page - 1) * $this->limit;
-        $collection = new Collection($this->data);
-        $collection = $collection->slice($offset, $this->limit);
-
-        $prevPages = $this->calculatePrevPages();
-        $nextPages = $this->calculateNextPages($totalPages);
-
-        return self::Result($collection, [
-            'page' => $this->page,
-            'total' => $this->total,
-            'total_pages' => (int)$totalPages,
-            'limit' => $this->limit,
-            'prev' => $prevPages,
-            'next' => $nextPages,
-        ]);
-    }
-
-    private static function Result(Collection $collection, array $pagination): paginationresult
-    {
-        return new paginationresult($collection, $pagination);
-    }
-
-    /**
-     * Calculate Previous Pages
-     *
-     * Calculates the previous page numbers.
-     *
-     * @return array|null An array containing the previous page numbers, or null if no previous pages
-     */
-    private function calculatePrevPages(): ?array
-    {
-        if ($this->page <= 1) {
-            return null;
+        $current_page = max(1, $this->page);
+        if ($this->query instanceof Model) {
+            $query = $this->query->newQuery();
+        } else {
+            $query = $this->query;
         }
+
+        $total = $query->count();
+        $total_page = (int)ceil($total / $this->limit);
+
+        $data = $query->orderBy('created_at', 'desc')
+            ->skip(($current_page - 1) * $this->limit)
+            ->take($this->limit)
+            ->get();
 
         $prevPages = [];
-        $prevPage = $this->page - 1;
-
-        if ($prevPage > 1) {
-            $prevPages[] = $prevPage - 1;
-        }
-
-        $prevPages[] = $prevPage;
-
-        return $prevPages;
-    }
-
-    /**
-     * Calculate Next Pages
-     *
-     * Calculates the next page numbers.
-     *
-     * @param int $totalPages The total number of pages
-     * @return array|null An array containing the next page numbers, or null if no next pages
-     */
-    private function calculateNextPages(int $totalPages): ?array
-    {
-        if ($this->page >= $totalPages) {
-            return null;
+        if ($current_page > 1) {
+            for ($i = max(1, $current_page - 2); $i < $current_page; $i++) {
+                $prevPages[] = $i;
+            }
         }
 
         $nextPages = [];
-        $nextPage = $this->page + 1;
-
-        $nextPages[] = $nextPage;
-
-        if ($nextPage < $totalPages) {
-            $nextPages[] = $nextPage + 1;
+        if ($current_page < $total_page) {
+            for ($i = $current_page + 1; $i <= min($total_page, $current_page + 2); $i++) {
+                $nextPages[] = $i;
+            }
         }
 
-        return $nextPages;
+        $pagination = [
+            'page' => $current_page,
+            'total' => $total,
+            'total_pages' => $total_page,
+            'limit' => $this->limit,
+            'prev' => $prevPages,
+            'next' => $nextPages,
+        ];
+
+        return self::collection([
+            'data' => $data,
+            'pagination' => $pagination,
+        ]);
     }
 }

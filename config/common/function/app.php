@@ -5,6 +5,7 @@ use Illuminate\Contracts\Container\BindingResolutionException;
 use JetBrains\PhpStorm\NoReturn;
 use Lumenity\Framework\config\common\app\log as Log;
 use Lumenity\Framework\config\common\app\view as View;
+use Lumenity\Framework\config\common\app\validator;
 use Lumenity\Framework\config\common\utils\container;
 
 // Check if the function 'ioc' already exists
@@ -101,10 +102,29 @@ if (!function_exists('redirect')) {
      *
      * @return void
      */
-    function redirect(string $url): void
+    #[NoReturn] function redirect(string $url): void
     {
         // Perform the redirect
         View::redirect($url);
+    }
+}
+
+// Check if the function 'validator' already exists
+if (!function_exists('validator')) {
+    /**
+     * Validate the given data against the specified rules.
+     *
+     * This function uses the validator class from the Lumenity Framework to validate data.
+     *
+     * @param array $data The data to validate.
+     * @param array $rules The validation rules.
+     * @param array $message Optional. Custom error messages for validation rules.
+     * @return validator True if validation passes, false otherwise.
+     */
+    function validator(array $data, array $rules, array $message = []): validator
+    {
+        // Validate the data against the rules
+        return validator::make($data, $rules, $message);
     }
 }
 
@@ -119,32 +139,43 @@ if (!function_exists('logger')) {
      *
      * @param string $message The message to log.
      * @param string $type The type of the log message. Default is 'info'.
-     *
+     * @param array $context
      * @return void
      */
-    function logger(string $message, string $type = 'info'): void
+    function logger(string $message, string $type = 'info', array $context = []): void
     {
         switch ($type) {
             case 'info':
                 // Log the message as an info message
-                Log::info($message);
+                Log::info($message, $context);
                 break;
             case 'warning':
                 // Log the message as a warning message
-                Log::warning($message);
+                Log::warning($message, $context);
                 break;
             case 'error':
                 // Log the message as an error message
-                Log::error($message);
+                Log::error($message, $context);
                 break;
             case 'debug':
                 // Log the message as a debug message
-                Log::debug($message);
+                Log::debug($message, $context);
                 break;
             case 'critical':
                 // Log the message as a critical message
-                Log::critical($message);
+                Log::critical($message, $context);
                 break;
+            case 'alert':
+                // Log the message as an alert message
+                Log::alert($message, $context);
+                break;
+            case 'emergency':
+                // Log the message as an emergency message
+                Log::emergency($message, $context);
+                break;
+            case 'notice':
+                // Log the message as a notice message
+                Log::notice($message, $context);
         }
     }
 }

@@ -102,6 +102,11 @@ class view
             return vite::capture($entrypoints);
         });
 
+        // add the 'token' runtime function to the Blade instance
+        $blade->addMethod('runtime', 'token', function () use ($blade) {
+            return $blade->getCsrfToken();
+        });
+
         // Render the view template and output the result
         echo $blade->run($view, $data);
     }

@@ -60,6 +60,11 @@ class lumenity
         $path = $_SERVER['PATH_INFO'] ?? '/';
         $method = $_SERVER['REQUEST_METHOD'];
 
+        $requestUri = $_SERVER['REQUEST_URI'] ?? '';
+        if ($requestUri === '/index.php' || $requestUri === '/index.php/') {
+            self::handleNotFound();
+        }
+
         foreach (self::$routes as $route) {
             if (self::matchRoute($route, $path, $method, $matches)) {
                 self::handleRoute($route, $matches);
@@ -121,13 +126,18 @@ class lumenity
     {
         $req = ioc('req');
         $res = ioc('res');
+
+        // Set the request method and URL
+        array_shift($matches);
+        $req->matches = $matches;
+
+        // Set the request method and URL
         foreach ($route['middleware'] as $middleware) {
             $middlewareInstance = ioc($middleware);
             $middlewareInstance->before($req, $res);
         }
 
-        array_shift($matches);
-
+        // If the route has a controller and function, instantiate the controller and call the function
         if ($route['function'] !== null) {
             $controllerInstance = ioc($route['controller']);
             self::handler([$controllerInstance, $route['function']], $matches, $req, $res);

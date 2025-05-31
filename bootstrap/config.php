@@ -19,6 +19,7 @@ return [
         'key' => $_ENV['APP_KEY'] ?? '',
         'debug' => $_ENV['APP_DEBUG'] ?? 'false',
         'url' => $_ENV['APP_URL'] ?? 'http://127.0.0.1:3000/',
+        'editor' => $_ENV['APP_EDITOR'] ?? 'vscode',
     ],
     // Database configuration values
     'database' => [

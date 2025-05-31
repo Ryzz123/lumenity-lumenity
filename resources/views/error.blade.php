@@ -1,43 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <title>{{ $title }}</title>
-    <style>
-        @import url("https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,400;0,700;1,400;1,700&display=swap");
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{{ $title ?? 'Error' }}</title>
 
-        body {
-            padding: 0;
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.bunny.net">
+    <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+
+    <!-- Styles -->
+    <style>
+        html, body {
+            background-color: #fff;
+            color: #636b6f;
+            font-family: 'Figtree', ui-sans-serif, system-ui, sans-serif;
+            font-weight: 200;
+            height: 100vh;
             margin: 0;
         }
 
-        .container {
+        .full-height {
+            height: 100vh;
+        }
+
+        .flex-center {
+            align-items: center;
             display: flex;
             justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #000;
+        }
+
+        .position-ref {
+            position: relative;
         }
 
         .content {
-            font-family: "Inter", sans-serif;
-            color: #bbb8b8;
-            font-weight: normal;
-            font-size: 16px;
-            text-transform: uppercase;
-            z-index: 10;
+            text-align: center;
         }
 
-        .content span {
-            color: #ffffff;
+        .title {
+            font-size: 84px;
+            font-weight: 600;
+            color: #FF2D20;
+        }
+
+        .message {
+            font-size: 36px;
+            font-weight: 400;
+            color: #636b6f;
+        }
+
+        .separator {
+            border-right: 2px solid;
+            font-size: 26px;
+            padding: 0 15px 0 15px;
+            text-align: center;
+        }
+
+        .ml-1 {
+            margin-left: .25rem;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            html, body {
+                background-color: #111827;
+                color: #9ca3af;
+            }
+
+            .title {
+                color: #FF2D20;
+            }
+
+            .message {
+                color: #9ca3af;
+            }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <p class="content">{{ $code }} <span>|</span> {{ $message }}</p>
+<div class="flex-center position-ref full-height">
+    <div class="content">
+        <div class="title">
+            {{ $code ?? '500' }}<span class="separator">|</span><span class="message ml-1">{{ $message ?? 'Server Error' }}</span>
+        </div>
+    </div>
 </div>
 </body>
 </html>

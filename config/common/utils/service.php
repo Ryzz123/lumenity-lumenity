@@ -3,10 +3,11 @@
 namespace Lumenity\Framework\config\common\utils;
 
 use Exception;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Model;
+use Lumenity\Framework\config\common\app\pagination;
 use Lumenity\Framework\config\common\app\store;
-use Lumenity\Framework\config\common\app\log as Log;
 use Illuminate\Database\Capsule\Manager;
-use Lumenity\Framework\config\common\app\validator;
 use Illuminate\Support\Collection;
 use Throwable;
 
@@ -100,68 +101,22 @@ class service
      */
     public static function drop(string $path, string $fileName): bool
     {
-        return Store::delete($path, $fileName);
+        return Store::drop($path, $fileName);
     }
 
     /**
-     * Log Message
+     * Render View
      *
-     * Logs a message with the specified log level.
+     * Renders a view with the provided data.
      *
-     * @param string $message The message to be logged
-     * @param string $type Optional. The log level (info, warning, error, debug, critical)
-     * @return void
+     * @param int $limit
+     * @param int $page
+     * @param Model|Builder $query
+     * @return Collection
      */
-    public static function log(string $message, string $type = 'info'): void
+    public static function pagination(int $limit, int $page, Model|Builder $query): Collection
     {
-        switch ($type) {
-            case 'info':
-                Log::info($message);
-                break;
-            case 'warning':
-                Log::warning($message);
-                break;
-            case 'error':
-                Log::error($message);
-                break;
-            case 'debug':
-                Log::debug($message);
-                break;
-            case 'critical':
-                Log::critical($message);
-                break;
-        }
-    }
-
-    /**
-     * Validate Data
-     *
-     * Validates the given data against the specified validation rules.
-     *
-     * @param array $data The data to be validated
-     * @param array $rules The validation rules
-     * @return array An array containing validation errors, if any
-     */
-    public static function validator(array $data, array $rules): array
-    {
-        $validator = new Validator();
-        if (!$validator->validate($data, $rules)) {
-            return $validator->errors();
-        } else {
-            return [];
-        }
-    }
-
-    /**
-     * Create Collection
-     *
-     * Creates a new collection instance from the given data.
-     *
-     * @param array $data The data to be converted into a collection
-     * @return Collection The collection instance containing the data
-     */
-    public static function collection(array $data): Collection
-    {
-        return new Collection($data);
+        $pagination = new pagination($limit, $page, $query);
+        return $pagination->paginate();
     }
 }
